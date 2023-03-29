@@ -35,7 +35,6 @@
 			function onButtonClick2(e){
 				var button = e.control;
 				app.lookup("loginsub").send()
-				alert("로그인123")
 			}
 
 			/*

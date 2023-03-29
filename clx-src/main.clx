@@ -28,7 +28,12 @@
       </cl:datamap>
       <cl:datamap std:sid="d-map-33667564" id="selectcode">
         <cl:datacolumnlist>
-          <cl:datacolumn std:sid="d-column-e739fa64" name="code"/>
+          <cl:datacolumn std:sid="d-column-e739fa64" name="code" datatype="string"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:datamap std:sid="d-map-9657f9b2" id="regicheck">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-2ed03a47" name="check" datatype="number"/>
         </cl:datacolumnlist>
       </cl:datamap>
       <cl:submission std:sid="submission-9413df9f" id="getclass" action="/getclass">
@@ -46,7 +51,22 @@
       </cl:submission>
       <cl:submission std:sid="submission-ece2699c" id="logout" action="/logout"/>
       <cl:submission std:sid="submission-485e2790" id="regiclass" action="/regi">
+        <cl:listener std:sid="listener-e2890aec" name="submit-success" handler="onRegiclassSubmitSuccess"/>
         <cl:requestdata dataid="selectcode"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-d7879e52" id="regick" action="/regicheck">
+        <cl:listener std:sid="listener-286a2e2a" name="submit-success" handler="onRegickSubmitSuccess"/>
+        <cl:requestdata dataid="selectcode"/>
+        <cl:responsedata dataid="regicheck"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-d204ebfd" id="cancle" action="/cancle">
+        <cl:listener std:sid="listener-79f54a43" name="submit-success" handler="onCancleSubmitSuccess2"/>
+        <cl:requestdata dataid="selectcode"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-4f161ee7" id="regick2" action="/regicheck">
+        <cl:listener std:sid="listener-9941ffa8" name="submit-success" handler="onRegick2SubmitSuccess"/>
+        <cl:requestdata dataid="selectcode"/>
+        <cl:responsedata dataid="regicheck"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
@@ -83,11 +103,12 @@
       <cl:listener std:sid="listener-7939b5a4" name="click" handler="onButtonClick3"/>
       <cl:xylayoutdata std:sid="xyl-data-6cecda93" top="25px" left="1203px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:button>
-    <cl:button std:sid="button-e5b4e8d3" value="수강신청">
+    <cl:button std:sid="button-e5b4e8d3" id="btn1" value="수강신청">
       <cl:listener std:sid="listener-951f80ba" name="click" handler="onButtonClick5"/>
       <cl:xylayoutdata std:sid="xyl-data-a66eb21c" top="454px" left="903px" width="100px" height="47px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:button>
-    <cl:button std:sid="button-73cb8918" value="수강취소">
+    <cl:button std:sid="button-73cb8918" id="btn2" value="수강취소">
+      <cl:listener std:sid="listener-bec5d991" name="click" handler="onButtonClick"/>
       <cl:xylayoutdata std:sid="xyl-data-a3b90fac" top="454px" left="1057px" width="100px" height="48px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:button>
     <cl:grid std:sid="grid-76d3d441" id="grd2" readonly="true" datasetid="class">

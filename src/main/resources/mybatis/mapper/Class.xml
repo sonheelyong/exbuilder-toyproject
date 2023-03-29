@@ -18,4 +18,22 @@
    WHERE UPPER(CLASS_NAME) LIKE '%'||UPPER(#{name})||'%'
    </select>
 
+   <insert id="regiClass"
+    parameterType="HashMap">
+    INSERT INTO REGI_TB (REGI_NO, USER_ID, CODE)
+    VALUES (emp_seq.NEXTVAL, #{user_id}, #{code})   
+   </insert>
+   
+   <select id="checkClass"
+   resultType="Int" parameterType="HashMap">
+   SELECT count(*)
+   FROM REGI_TB
+   WHERE CODE = #{code} and USER_ID = #{user_id}
+   </select>
+   
+   <delete id="cancle"
+   parameterType="HashMap">
+   DELETE FROM REGI_TB
+   WHERE CODE = #{code} and USER_ID = #{user_id}
+   </delete>
 </mapper>

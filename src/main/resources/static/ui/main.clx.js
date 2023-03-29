@@ -96,9 +96,87 @@
 				var vcGrid = app.lookup("grd2");
 				var index = vcGrid.getSelectedRowIndex();
 				var vnSelectedRowIdx = vcGrid.dataSet.getOriginalValue(index, "code");
+				var class_name = vcGrid.dataSet.getOriginalValue(index, "class_name");
+				var teacher = vcGrid.dataSet.getOriginalValue(index, "teacher");
 				app.lookup("selectcode").setValue("code", vnSelectedRowIdx);
-				app.lookup("regiclass").send()
-				
+				app.lookup("regick").send()
+			    
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onRegickSubmitSuccess(e){
+				var regick = e.control;
+				var vcGrid = app.lookup("grd2");
+				var index = vcGrid.getSelectedRowIndex();
+				var vnSelectedRowIdx = vcGrid.dataSet.getOriginalValue(index, "code");
+				var class_name = vcGrid.dataSet.getOriginalValue(index, "class_name");
+				var teacher = vcGrid.dataSet.getOriginalValue(index, "teacher");
+				var check = app.lookup("regicheck").getValue("check")
+				if(check == 0){
+					if(confirm("강의명:"+class_name+",강사명:"+teacher+"\n수강신청을 하시겠습니까?") == true){
+					app.lookup("regiclass").send()
+					}else{}
+				}else{
+					alert("이미 신청한 강의 입니다.")
+				}
+			}
+
+			/*
+			 * "수강취소" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick(e){
+				var button = e.control;
+				var vcGrid = app.lookup("grd2");
+				var index = vcGrid.getSelectedRowIndex();
+				var vnSelectedRowIdx = vcGrid.dataSet.getOriginalValue(index, "code");
+				var class_name = vcGrid.dataSet.getOriginalValue(index, "class_name");
+				var teacher = vcGrid.dataSet.getOriginalValue(index, "teacher");
+				app.lookup("selectcode").setValue("code", vnSelectedRowIdx);
+				app.lookup("regick2").send()
+			}
+
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onRegick2SubmitSuccess(e){
+				var regick2 = e.control;
+				var vcGrid = app.lookup("grd2");
+				var index = vcGrid.getSelectedRowIndex();
+				var vnSelectedRowIdx = vcGrid.dataSet.getOriginalValue(index, "code");
+				var class_name = vcGrid.dataSet.getOriginalValue(index, "class_name");
+				var teacher = vcGrid.dataSet.getOriginalValue(index, "teacher");
+				var check = app.lookup("regicheck").getValue("check")
+				if(check == 1){
+					if(confirm("강의명:"+class_name+",강사명:"+teacher+"\n수강신청을 취소 하시겠습니까?") == true){
+					app.lookup("cancle").send()
+					}else{}
+				}else{
+					alert("수강신청 하지 않은 강의 입니다.")
+				}
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onRegiclassSubmitSuccess(e){
+				var regiclass = e.control;
+				alert("수강신청이 완료 되었습니다.")
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onCancleSubmitSuccess2(e){
+				var cancle = e.control;
+				alert("수강취소가 완료되었습니다.")
 			};
 			// End - User Script
 			
@@ -144,9 +222,21 @@
 			
 			var dataMap_3 = new cpr.data.DataMap("selectcode");
 			dataMap_3.parseData({
-				"columns" : [{"name": "code"}]
+				"columns" : [{
+					"name": "code",
+					"dataType": "string"
+				}]
 			});
 			app.register(dataMap_3);
+			
+			var dataMap_4 = new cpr.data.DataMap("regicheck");
+			dataMap_4.parseData({
+				"columns" : [{
+					"name": "check",
+					"dataType": "number"
+				}]
+			});
+			app.register(dataMap_4);
 			var submission_1 = new cpr.protocols.Submission("getclass");
 			submission_1.action = "/getclass";
 			submission_1.addResponseData(dataSet_1, true);
@@ -180,7 +270,36 @@
 			var submission_5 = new cpr.protocols.Submission("regiclass");
 			submission_5.action = "/regi";
 			submission_5.addRequestData(dataMap_3);
+			if(typeof onRegiclassSubmitSuccess == "function") {
+				submission_5.addEventListener("submit-success", onRegiclassSubmitSuccess);
+			}
 			app.register(submission_5);
+			
+			var submission_6 = new cpr.protocols.Submission("regick");
+			submission_6.action = "/regicheck";
+			submission_6.addRequestData(dataMap_3);
+			submission_6.addResponseData(dataMap_4, false);
+			if(typeof onRegickSubmitSuccess == "function") {
+				submission_6.addEventListener("submit-success", onRegickSubmitSuccess);
+			}
+			app.register(submission_6);
+			
+			var submission_7 = new cpr.protocols.Submission("cancle");
+			submission_7.action = "/cancle";
+			submission_7.addRequestData(dataMap_3);
+			if(typeof onCancleSubmitSuccess2 == "function") {
+				submission_7.addEventListener("submit-success", onCancleSubmitSuccess2);
+			}
+			app.register(submission_7);
+			
+			var submission_8 = new cpr.protocols.Submission("regick2");
+			submission_8.action = "/regicheck";
+			submission_8.addRequestData(dataMap_3);
+			submission_8.addResponseData(dataMap_4, false);
+			if(typeof onRegick2SubmitSuccess == "function") {
+				submission_8.addEventListener("submit-success", onRegick2SubmitSuccess);
+			}
+			app.register(submission_8);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023px)", "tablet");
 			app.supportMedia("all and (max-width: 499px)", "mobile");
@@ -281,7 +400,7 @@
 				"height": "20px"
 			});
 			
-			var button_3 = new cpr.controls.Button();
+			var button_3 = new cpr.controls.Button("btn1");
 			button_3.value = "수강신청";
 			if(typeof onButtonClick5 == "function") {
 				button_3.addEventListener("click", onButtonClick5);
@@ -293,8 +412,11 @@
 				"height": "47px"
 			});
 			
-			var button_4 = new cpr.controls.Button();
+			var button_4 = new cpr.controls.Button("btn2");
 			button_4.value = "수강취소";
+			if(typeof onButtonClick == "function") {
+				button_4.addEventListener("click", onButtonClick);
+			}
 			container.addChild(button_4, {
 				"top": "454px",
 				"left": "1057px",

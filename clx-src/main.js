@@ -83,7 +83,85 @@ function onButtonClick5(e){
 	var vcGrid = app.lookup("grd2");
 	var index = vcGrid.getSelectedRowIndex();
 	var vnSelectedRowIdx = vcGrid.dataSet.getOriginalValue(index, "code");
+	var class_name = vcGrid.dataSet.getOriginalValue(index, "class_name");
+	var teacher = vcGrid.dataSet.getOriginalValue(index, "teacher");
 	app.lookup("selectcode").setValue("code", vnSelectedRowIdx);
-	app.lookup("regiclass").send()
-	
+	app.lookup("regick").send()
+    
+}
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onRegickSubmitSuccess(e){
+	var regick = e.control;
+	var vcGrid = app.lookup("grd2");
+	var index = vcGrid.getSelectedRowIndex();
+	var vnSelectedRowIdx = vcGrid.dataSet.getOriginalValue(index, "code");
+	var class_name = vcGrid.dataSet.getOriginalValue(index, "class_name");
+	var teacher = vcGrid.dataSet.getOriginalValue(index, "teacher");
+	var check = app.lookup("regicheck").getValue("check")
+	if(check == 0){
+		if(confirm("강의명:"+class_name+",강사명:"+teacher+"\n수강신청을 하시겠습니까?") == true){
+		app.lookup("regiclass").send()
+		}else{}
+	}else{
+		alert("이미 신청한 강의 입니다.")
+	}
+}
+
+/*
+ * "수강취소" 버튼에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onButtonClick(e){
+	var button = e.control;
+	var vcGrid = app.lookup("grd2");
+	var index = vcGrid.getSelectedRowIndex();
+	var vnSelectedRowIdx = vcGrid.dataSet.getOriginalValue(index, "code");
+	var class_name = vcGrid.dataSet.getOriginalValue(index, "class_name");
+	var teacher = vcGrid.dataSet.getOriginalValue(index, "teacher");
+	app.lookup("selectcode").setValue("code", vnSelectedRowIdx);
+	app.lookup("regick2").send()
+}
+
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onRegick2SubmitSuccess(e){
+	var regick2 = e.control;
+	var vcGrid = app.lookup("grd2");
+	var index = vcGrid.getSelectedRowIndex();
+	var vnSelectedRowIdx = vcGrid.dataSet.getOriginalValue(index, "code");
+	var class_name = vcGrid.dataSet.getOriginalValue(index, "class_name");
+	var teacher = vcGrid.dataSet.getOriginalValue(index, "teacher");
+	var check = app.lookup("regicheck").getValue("check")
+	if(check == 1){
+		if(confirm("강의명:"+class_name+",강사명:"+teacher+"\n수강신청을 취소 하시겠습니까?") == true){
+		app.lookup("cancle").send()
+		}else{}
+	}else{
+		alert("수강신청 하지 않은 강의 입니다.")
+	}
+}
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onRegiclassSubmitSuccess(e){
+	var regiclass = e.control;
+	alert("수강신청이 완료 되었습니다.")
+}
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onCancleSubmitSuccess2(e){
+	var cancle = e.control;
+	alert("수강취소가 완료되었습니다.")
 }
