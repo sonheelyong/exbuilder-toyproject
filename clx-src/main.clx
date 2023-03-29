@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-f6f269e7" version="1.0.4300">
+  <head std:sid="head-68fd4d99">
+    <screen std:sid="screen-7f35709f" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-052bbb61" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-ea585641" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-ebcd4fef">
+      <cl:dataset std:sid="d-set-e4264419" id="class">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-1c9e2b66" name="code" datatype="string"/>
+          <cl:datacolumn std:sid="d-column-1a71edc9" name="class_name"/>
+          <cl:datacolumn std:sid="d-column-882e0655" name="teacher"/>
+          <cl:datacolumn std:sid="d-column-87f98655" name="s_date" datatype="string" expression="YYMMDD"/>
+          <cl:datacolumn std:sid="d-column-170993dd" name="e_date" datatype="string" expression="YYMMDD"/>
+        </cl:datacolumnlist>
+        <cl:datarowlist/>
+      </cl:dataset>
+      <cl:datamap std:sid="d-map-b9c3d38e" id="searchname">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-bcff6839" name="class_name"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:datamap std:sid="d-map-7e0887ec" id="loginuser">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-6e2feba7" name="user_id" datatype="string"/>
+          <cl:datacolumn std:sid="d-column-2015df21" name="user_name"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:datamap std:sid="d-map-33667564" id="selectcode">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-e739fa64" name="code"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-9413df9f" id="getclass" action="/getclass">
+        <cl:listener std:sid="listener-f9b2b4ae" name="submit-success" handler="onGetclassSubmitSuccess"/>
+        <cl:responsedata dataid="class" isadd="true"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-b38fd748" id="serchclass" action="/searchclass">
+        <cl:listener std:sid="listener-de11e089" name="submit-success" handler="onSerchclassSubmitSuccess"/>
+        <cl:requestdata dataid="searchname"/>
+        <cl:responsedata dataid="class"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-de77762a" id="getuser" method="get" action="/getusername">
+        <cl:listener std:sid="listener-1e1dee81" name="submit-success" handler="onGetuserSubmitSuccess"/>
+        <cl:responsedata dataid="loginuser"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-ece2699c" id="logout" action="/logout"/>
+      <cl:submission std:sid="submission-485e2790" id="regiclass" action="/regi">
+        <cl:requestdata dataid="selectcode"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-ed14dd04">
+    <cl:listener std:sid="listener-ff06dc25" name="init" handler="onBodyInit"/>
+    <cl:output std:sid="output-d501e3b0" style="font-size:40px; text-align:center;" value="수강 관리 페이지">
+      <cl:xylayoutdata std:sid="xyl-data-5d66c584" top="10px" width="379px" height="110px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:group std:sid="group-c637189b">
+      <cl:datamapcontext datacontrolid="searchname"/>
+      <cl:xylayoutdata std:sid="xyl-data-aad1af3c" top="143px" width="814px" height="51px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+      <cl:output std:sid="output-12b1e423" value="강의명">
+        <cl:xylayoutdata std:sid="xyl-data-9fd3b3aa" top="20px" left="45px" width="64px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:output>
+      <cl:inputbox std:sid="i-box-84a169d6" id="ipb1">
+        <cl:relativebind property="value" columnname="class_name"/>
+        <cl:xylayoutdata std:sid="xyl-data-75a42a21" top="16px" left="119px" width="542px" height="28px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:inputbox>
+      <cl:button std:sid="button-e0bc3149" value="조회">
+        <cl:listener std:sid="listener-43cbc91b" name="click" handler="onButtonClick2"/>
+        <cl:xylayoutdata std:sid="xyl-data-efdfabcc" top="20px" left="671px" width="67px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:button>
+      <cl:xylayout std:sid="xylayout-9e1f6d72"/>
+    </cl:group>
+    <cl:output std:sid="output-0b28152a" value="님.   환영합니다">
+      <cl:xylayoutdata std:sid="xyl-data-d40fb96a" top="25px" left="1082px" width="112px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-fd617736" id="output1">
+      <cl:datamapbind property="value" datacontrolid="loginuser" columnname="user_name"/>
+      <cl:xylayoutdata std:sid="xyl-data-bc23151c" top="25px" left="1014px" width="72px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:button std:sid="button-daca0848" value="로그아웃">
+      <cl:listener std:sid="listener-7939b5a4" name="click" handler="onButtonClick3"/>
+      <cl:xylayoutdata std:sid="xyl-data-6cecda93" top="25px" left="1203px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:button std:sid="button-e5b4e8d3" value="수강신청">
+      <cl:listener std:sid="listener-951f80ba" name="click" handler="onButtonClick5"/>
+      <cl:xylayoutdata std:sid="xyl-data-a66eb21c" top="454px" left="903px" width="100px" height="47px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:button std:sid="button-73cb8918" value="수강취소">
+      <cl:xylayoutdata std:sid="xyl-data-a3b90fac" top="454px" left="1057px" width="100px" height="48px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:grid std:sid="grid-76d3d441" id="grd2" readonly="true" datasetid="class">
+      <cl:xylayoutdata std:sid="xyl-data-7bd5d0e3" top="224px" width="1011px" height="200px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+      <cl:gridcolumn std:sid="g-column-6efeb3ea" width="60px"/>
+      <cl:gridcolumn std:sid="g-column-3c1c1dc0" width="177px"/>
+      <cl:gridcolumn std:sid="g-column-ffff84dd" width="83px"/>
+      <cl:gridcolumn std:sid="g-column-05c6bcbd"/>
+      <cl:gridcolumn std:sid="g-column-8003c871"/>
+      <cl:gridcolumn std:sid="g-column-3e552f10"/>
+      <cl:gridheader std:sid="gh-band-0a5fbfb3">
+        <cl:gridrow std:sid="g-row-2bc1e582"/>
+        <cl:gridcell std:sid="gh-cell-43f58621" rowindex="0" colindex="0" targetcolumnname="code" sortable="true" filterable="true" text="번호"/>
+        <cl:gridcell std:sid="gh-cell-f8090acd" rowindex="0" colindex="1" targetcolumnname="class_name" sortable="true" filterable="true" text="강의 명"/>
+        <cl:gridcell std:sid="gh-cell-6669e727" rowindex="0" colindex="2" targetcolumnname="teacher" sortable="true" filterable="true" text="강사명"/>
+        <cl:gridcell std:sid="gh-cell-c9beb838" rowindex="0" colindex="3" targetcolumnname="s_date" sortable="true" filterable="true" text="수업 시작일"/>
+        <cl:gridcell std:sid="gh-cell-6b96985b" rowindex="0" colindex="4" targetcolumnname="e_date" sortable="true" filterable="true" text="수업 종료일"/>
+        <cl:gridcell std:sid="gh-cell-40452fa6" rowindex="0" colindex="5" text="수강 신청일"/>
+      </cl:gridheader>
+      <cl:griddetail std:sid="gd-band-7734cf08">
+        <cl:gridrow std:sid="g-row-c78b8f33"/>
+        <cl:gridcell std:sid="gd-cell-e27464f7" rowindex="0" colindex="0" columnname="code"/>
+        <cl:gridcell std:sid="gd-cell-f21f4ede" rowindex="0" colindex="1" columnname="class_name"/>
+        <cl:gridcell std:sid="gd-cell-84e8fc3d" rowindex="0" colindex="2" columnname="teacher"/>
+        <cl:gridcell std:sid="gd-cell-cc351d7f" rowindex="0" colindex="3" columnname="s_date"/>
+        <cl:gridcell std:sid="gd-cell-d3e73312" rowindex="0" colindex="4" columnname="e_date"/>
+        <cl:gridcell std:sid="gd-cell-e02d6d6a" rowindex="0" colindex="5"/>
+      </cl:griddetail>
+    </cl:grid>
+    <cl:xylayout std:sid="xylayout-d9a4e222"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

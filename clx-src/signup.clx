@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-90620097" version="1.0.4300">
+  <head std:sid="head-cea449d1">
+    <screen std:sid="screen-fd60c39c" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-00680dff" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-408d79cb" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-ba90c467">
+      <cl:dataset std:sid="d-set-623eb8ec" id="ds1">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-9188ad4b" name="getid"/>
+        </cl:datacolumnlist>
+        <cl:datarowlist>
+          <cl:datarow>
+            <cl:datavalue columnname="getid"><![CDATA[1111]]></cl:datavalue>
+          </cl:datarow>
+        </cl:datarowlist>
+      </cl:dataset>
+      <cl:datamap std:sid="d-map-f5b87c60" id="dm1">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-1158fc8e" name="user_id"/>
+          <cl:datacolumn std:sid="d-column-0e8ae13c" name="user_name"/>
+          <cl:datacolumn std:sid="d-column-047f6cb6" name="user_pw"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:datamap std:sid="d-map-0bfff897" id="dm2">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-85f5c949" name="idcheck" datatype="number" defaultvalue=""/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:datamap std:sid="d-map-051cf7c7" id="dm3">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-a45c62db" name="getid" defaultvalue=""/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-f20365eb" id="signup" action="/signup">
+        <cl:requestdata dataid="dm1"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-47e3a000" id="idcheck" action="/idcheck">
+        <cl:listener std:sid="listener-1c91304b" name="submit-success" handler="onIdcheckSubmitSuccess"/>
+        <cl:requestdata dataid="dm1"/>
+        <cl:responsedata dataid="dm2"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-33f56f5e" id="sms3" action="/get">
+        <cl:listener std:sid="listener-cef8722a" name="submit-success" handler="onSms3SubmitSuccess"/>
+        <cl:responsedata dataid="dm3"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-f40261b6">
+    <cl:datarowcontext datacontrolid="ds1" rowindex="0"/>
+    <cl:output std:sid="output-d501e3b0" style="font-size:40px; text-align:center;" value="회원 가입">
+      <cl:xylayoutdata std:sid="xyl-data-cabfd128" top="100px" width="379px" height="110px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-7a9060c0" style="text-align:right;" value="아이디">
+      <cl:xylayoutdata std:sid="xyl-data-f16c2348" top="288px" left="500px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-42df540e" style="text-align:right;" value="이름">
+      <cl:xylayoutdata std:sid="xyl-data-7d4da8c6" top="348px" left="500px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:inputbox std:sid="i-box-6a919de9" id="ipb1">
+      <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dm1" columnname="user_id"/>
+      <cl:xylayoutdata std:sid="xyl-data-97dc7a88" top="280px" left="658px" width="190px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:inputbox std:sid="i-box-87ab6372" id="ipb2">
+      <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dm1" columnname="user_name"/>
+      <cl:xylayoutdata std:sid="xyl-data-59fa18ce" top="340px" left="658px" width="190px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:inputbox std:sid="i-box-17569100" id="ipb3" secret="true">
+      <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dm1" columnname="user_pw"/>
+      <cl:xylayoutdata std:sid="xyl-data-7d245fcf" top="400px" left="658px" width="190px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:inputbox std:sid="i-box-6068c69b" id="ipb4" secret="true">
+      <cl:xylayoutdata std:sid="xyl-data-a3df13a9" top="460px" left="658px" width="190px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:output std:sid="output-fd35821d" style="text-align:right;" value="비밀번호">
+      <cl:xylayoutdata std:sid="xyl-data-ecb6cd73" top="408px" left="500px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-2a771f64" style="text-align:right;" value="비밀번호 확인">
+      <cl:xylayoutdata std:sid="xyl-data-f542b7f7" top="468px" left="500px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:button std:sid="button-f4a0ac42" value="중복확인">
+      <cl:listener std:sid="listener-5b67496e" name="click" handler="onButtonClick"/>
+      <cl:xylayoutdata std:sid="xyl-data-0896233e" top="288px" left="871px" width="77px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:button std:sid="button-ee31eb28" value="회원가입">
+      <cl:listener std:sid="listener-f6bcdbf7" name="click" handler="onButtonClick3"/>
+      <cl:xylayoutdata std:sid="xyl-data-21404d52" top="555px" left="712px" width="101px" height="30px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:button std:sid="button-7d4d4aeb" value="ddd">
+      <cl:listener std:sid="listener-f4a2c4a2" name="click" handler="onButtonClick5"/>
+      <cl:xylayoutdata std:sid="xyl-data-9ea1cb1e" top="525px" left="313px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:button std:sid="button-24d4ae73" value="123">
+      <cl:listener std:sid="listener-1ca9df62" name="click" handler="onButtonClick4"/>
+      <cl:xylayoutdata std:sid="xyl-data-2a266e1c" top="584px" left="323px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:inputbox std:sid="i-box-30a9f49e" id="ipb5">
+      <cl:listener std:sid="listener-a6be7cec" name="value-change" handler="onIpb5ValueChange"/>
+      <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dm3" columnname="getid"/>
+      <cl:xylayoutdata std:sid="xyl-data-45e129c0" top="374px" left="313px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:inputbox std:sid="i-box-20c9e971" id="ipb6">
+      <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dm2" columnname="idcheck"/>
+      <cl:xylayoutdata std:sid="xyl-data-cd31822b" top="288px" left="323px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:xylayout std:sid="xylayout-eef93a46"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

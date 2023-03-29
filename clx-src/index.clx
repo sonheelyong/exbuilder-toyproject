@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-e55cb1fc" version="1.0.4300">
+  <head std:sid="head-12627f9b">
+    <screen std:sid="screen-c1b7df82" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-7c26c7d5" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-eb43fda8" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-6cb5586c">
+      <cl:datamap std:sid="d-map-5f28e678" id="login">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-12ddc37f" name="insert_id"/>
+          <cl:datacolumn std:sid="d-column-957ccdac" name="insert_pw"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:datamap std:sid="d-map-38fe1f52" id="user">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-e8d200de" name="user_id"/>
+          <cl:datacolumn std:sid="d-column-bab8f6d3" name="user_name"/>
+          <cl:datacolumn std:sid="d-column-e24cbce2" name="user_role"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-a511822d" id="loginsub" action="/login">
+        <cl:listener std:sid="listener-1a7deddb" name="submit-success" handler="onLoginsubSubmitSuccess"/>
+        <cl:listener std:sid="listener-0430dd1b" name="submit-error" handler="onLoginsubSubmitError"/>
+        <cl:listener std:sid="listener-b777562c" name="error-status" handler="onLoginsubErrorStatus"/>
+        <cl:requestdata dataid="login"/>
+        <cl:responsedata dataid="user"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-ede6bc8a">
+    <cl:output std:sid="output-d501e3b0" style="font-size:40px; text-align:center;" value="로그인">
+      <cl:xylayoutdata std:sid="xyl-data-848452a8" top="99px" width="379px" height="110px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-7a9060c0" style="text-align:right;" value="아이디">
+      <cl:xylayoutdata std:sid="xyl-data-3ce692b7" top="285px" left="500px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-f788d225" style="text-align:right;" value="비밀번호">
+      <cl:xylayoutdata std:sid="xyl-data-4aeae650" top="343px" left="500px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:inputbox std:sid="i-box-6a919de9" id="ipb1">
+      <cl:datamapbind property="value" datacontrolid="login" columnname="insert_id"/>
+      <cl:xylayoutdata std:sid="xyl-data-6e2eb8c6" top="277px" left="633px" width="190px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:inputbox std:sid="i-box-3697997b" id="ipb2" secret="true">
+      <cl:datamapbind property="value" datacontrolid="login" columnname="insert_pw"/>
+      <cl:xylayoutdata std:sid="xyl-data-59efddca" top="335px" left="633px" width="190px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:button std:sid="button-0d07b807" value="회원가입">
+      <cl:listener std:sid="listener-f53faab3" name="click" handler="onButtonClick"/>
+      <cl:xylayoutdata std:sid="xyl-data-5ddbc752" top="412px" left="598px" width="100px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:button std:sid="button-fd31c862" value="로그인">
+      <cl:listener std:sid="listener-9c89674f" name="click" handler="onButtonClick2"/>
+      <cl:xylayoutdata std:sid="xyl-data-5cd0c904" top="412px" left="745px" width="100px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:xylayout std:sid="xylayout-17b9b991"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

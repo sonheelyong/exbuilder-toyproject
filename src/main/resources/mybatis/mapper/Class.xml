@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="class">
+
+   <select id="getclass"
+   resultType="com.example.demo.vo.ClassVo">
+   SELECT * 
+   FROM CLASS_TB
+   </select>
+   
+   <select id="serchclass"
+   resultType="com.example.demo.vo.ClassVo">
+   SELECT * 
+   FROM CLASS_TB 
+   WHERE UPPER(CLASS_NAME) LIKE '%'||UPPER(#{name})||'%'
+   </select>
+
+</mapper>
