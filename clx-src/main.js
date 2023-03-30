@@ -155,6 +155,7 @@ function onRegick2SubmitSuccess(e){
 function onRegiclassSubmitSuccess(e){
 	var regiclass = e.control;
 	alert("수강신청이 완료 되었습니다.")
+	app.lookup("getclass").send();
 }
 
 /*
@@ -164,4 +165,5 @@ function onRegiclassSubmitSuccess(e){
 function onCancleSubmitSuccess2(e){
 	var cancle = e.control;
 	alert("수강취소가 완료되었습니다.")
+	app.lookup("getclass").send();
 }

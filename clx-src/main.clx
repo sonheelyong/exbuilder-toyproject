@@ -12,6 +12,7 @@
           <cl:datacolumn std:sid="d-column-882e0655" name="teacher"/>
           <cl:datacolumn std:sid="d-column-87f98655" name="s_date" datatype="string" expression="YYMMDD"/>
           <cl:datacolumn std:sid="d-column-170993dd" name="e_date" datatype="string" expression="YYMMDD"/>
+          <cl:datacolumn std:sid="d-column-4e512626" name="regi_date"/>
         </cl:datacolumnlist>
         <cl:datarowlist/>
       </cl:dataset>
@@ -38,7 +39,7 @@
       </cl:datamap>
       <cl:submission std:sid="submission-9413df9f" id="getclass" action="/getclass">
         <cl:listener std:sid="listener-f9b2b4ae" name="submit-success" handler="onGetclassSubmitSuccess"/>
-        <cl:responsedata dataid="class" isadd="true"/>
+        <cl:responsedata dataid="class" isadd="false"/>
       </cl:submission>
       <cl:submission std:sid="submission-b38fd748" id="serchclass" action="/searchclass">
         <cl:listener std:sid="listener-de11e089" name="submit-success" handler="onSerchclassSubmitSuccess"/>
@@ -121,7 +122,7 @@
       <cl:gridcolumn std:sid="g-column-3e552f10"/>
       <cl:gridheader std:sid="gh-band-0a5fbfb3">
         <cl:gridrow std:sid="g-row-2bc1e582"/>
-        <cl:gridcell std:sid="gh-cell-43f58621" rowindex="0" colindex="0" targetcolumnname="code" sortable="true" filterable="true" text="번호"/>
+        <cl:gridcell std:sid="gh-cell-43f58621" rowindex="0" colindex="0" targetcolumnname="code" sortable="true" filterable="true" text="코드"/>
         <cl:gridcell std:sid="gh-cell-f8090acd" rowindex="0" colindex="1" targetcolumnname="class_name" sortable="true" filterable="true" text="강의 명"/>
         <cl:gridcell std:sid="gh-cell-6669e727" rowindex="0" colindex="2" targetcolumnname="teacher" sortable="true" filterable="true" text="강사명"/>
         <cl:gridcell std:sid="gh-cell-c9beb838" rowindex="0" colindex="3" targetcolumnname="s_date" sortable="true" filterable="true" text="수업 시작일"/>
@@ -135,7 +136,7 @@
         <cl:gridcell std:sid="gd-cell-84e8fc3d" rowindex="0" colindex="2" columnname="teacher"/>
         <cl:gridcell std:sid="gd-cell-cc351d7f" rowindex="0" colindex="3" columnname="s_date"/>
         <cl:gridcell std:sid="gd-cell-d3e73312" rowindex="0" colindex="4" columnname="e_date"/>
-        <cl:gridcell std:sid="gd-cell-e02d6d6a" rowindex="0" colindex="5"/>
+        <cl:gridcell std:sid="gd-cell-e02d6d6a" rowindex="0" colindex="5" columnname="regi_date"/>
       </cl:griddetail>
     </cl:grid>
     <cl:xylayout std:sid="xylayout-d9a4e222"/>

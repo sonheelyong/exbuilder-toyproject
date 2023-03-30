@@ -27,21 +27,25 @@ public class ClassController {
   
   // 전체 강의 조회
   @PostMapping("/getclass")
-  public View getClass( DataRequest dataRequest) {
-	  List<ClassDTO> vo = classService.getCs();
-	  dataRequest.setResponse("class", vo);
+  public View getClass(@SessionAttribute(name = "logInUser", required = false)UserVo user, DataRequest dataRequest) {
+	  String user_id = user.getUser_id();
 	  
+	  List<ClassDTO> vo = classService.getCs(user_id);
+	  dataRequest.setResponse("class", vo);
+	
 	  return new JSONDataView();
   }
   
   // 검색 강의 조회
   @PostMapping("/searchclass")
-  public View searchClass(DataRequest dataRequest) {
+  public View searchClass(@SessionAttribute(name = "logInUser", required = false)UserVo user, DataRequest dataRequest) {
+	  String user_id = user.getUser_id();
+	  
 	  ParameterGroup param = dataRequest.getParameterGroup("searchname");
 	  String name = param.getValue("class_name");
-	  List<ClassVo> vo = classService.searchList(name);
+	  List<ClassDTO> vo = classService.searchList(name,user_id);
 	  dataRequest.setResponse("class", vo);
-	 
+	  System.out.println(vo.toString());
 	  return new JSONDataView();
   }
   
@@ -84,10 +88,66 @@ public class ClassController {
 	   
 	   return new JSONDataView();
    }
+   
+   // 강의 추가, 수정 전 중복 체크
+   @PostMapping("/codecheck")
+   public View codecheck( DataRequest dataRequest ) {
+	   
+	   ParameterGroup param = dataRequest.getParameterGroup("selectcode");
+	   int code = Integer.parseInt(param.getValue("code"));
+	   int check = classService.chceckCode(code);
+	   
+	   Map<String, Object> map = new HashMap<>();
+	   map.put("cknum", check);
+	   dataRequest.setResponse("codecheck", map);
+	   
+	   return new JSONDataView();
+   }
+   
+   // 강의 추가
+   @PostMapping("/addclass")
+   public View addclass( DataRequest dataRequest ) {
+	   ParameterGroup param = dataRequest.getParameterGroup("changeclass");
+	   ClassVo vo = new ClassVo();
+	   vo.setCode(Integer.parseInt(param.getValue("code")));
+	   vo.setClass_name(param.getValue("class_name"));
+	   vo.setTeacher(param.getValue("teacher"));
+	   vo.setS_date(param.getValue("s_date"));
+	   vo.setE_date(param.getValue("e_date"));
+	   
+	   classService.addclass(vo);
+	   
+	   return new JSONDataView();
+   }
+   
+   
+   // 강의 수정
+   @PostMapping("/update")
+   public View update( DataRequest dataRequest ) {
+	   
+	   ParameterGroup param = dataRequest.getParameterGroup("changeclass");
+	   ClassVo vo = new ClassVo();
+	   vo.setCode(Integer.parseInt(param.getValue("code")));
+	   vo.setClass_name(param.getValue("class_name"));
+	   vo.setTeacher(param.getValue("teacher"));
+	   vo.setS_date(param.getValue("s_date"));
+	   vo.setE_date(param.getValue("e_date"));
+	   
+	   classService.updateclass(vo);
+	   
+	   return new JSONDataView();
+   }
   
-  
-  
-  
+  // 강의 삭제
+   @PostMapping("/deleteclass")
+   public View deleteclass( DataRequest dataRequest ) {
+	   ParameterGroup param = dataRequest.getParameterGroup("selectcode");
+	   int code = Integer.parseInt(param.getValue("code"));
+	   classService.deleteclass(code);
+	   
+	   
+	   return new JSONDataView();
+   }
   
   
   

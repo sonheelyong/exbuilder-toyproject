@@ -14,13 +14,13 @@ public class ClassService {
      @Autowired
      ClassDao classDao;
 
-	public List<ClassDTO> getCs() {
-		List<ClassDTO> vo = classDao.getCs();
+	public List<ClassDTO> getCs(String user_id) {
+		List<ClassDTO> vo = classDao.getCs(user_id);
 		return vo;
 	}
 
-	public List<ClassVo> searchList(String name) {
-		List<ClassVo> vo = classDao.searchList(name);
+	public List<ClassDTO> searchList(String name, String user_id) {
+		List<ClassDTO> vo = classDao.searchList(name,user_id);
 		return vo;
 	}
 
@@ -36,6 +36,26 @@ public class ClassService {
 
 	public void cancleClass(int code, String user_id) {
 		classDao.cancleClass(code,user_id);
+		
+	}
+
+	public void updateclass(ClassVo vo) {
+		classDao.updateclass(vo);
+		
+	}
+
+	public int chceckCode(int code) {
+		int check = classDao.checkCode(code);
+		return check;
+	}
+
+	public void addclass(ClassVo vo) {
+        classDao.addclass(vo);
+		
+	}
+
+	public void deleteclass(int code) {
+		classDao.deleteclass(code);
 		
 	}
 }

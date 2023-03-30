@@ -12,14 +12,331 @@
 			var linker = {};
 			// Start - User Script
 			/************************************************
-			 * adminpage.js
-			 * Created at 2023. 3. 28. 오후 3:09:34.
+			 * main.js
+			 * Created at 2023. 3. 27. 오전 10:37:29.
 			 *
 			 * @author user
-			 ************************************************/;
+			 ************************************************/
+
+			/*
+			 * 루트 컨테이너에서 init 이벤트 발생 시 호출.
+			 * 앱이 최초 구성될 때 발생하는 이벤트 입니다.
+			 */
+			function onBodyInit(e){
+				app.lookup("getclass").send();
+				app.lookup("getuser").send();
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onGetclassSubmitSuccess(e){
+				var getclass = e.control;
+				app.lookup("grd2").redraw();
+			}
+
+			/*
+			 * "조회" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick2(e){
+				var button = e.control;
+				app.lookup("serchclass").send()
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onGetuserSubmitSuccess(e){
+				var getuser = e.control;
+				app.lookup("output1").redraw()
+			}
+
+			/*
+			 * "로그아웃" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick3(e){
+				var button = e.control;
+				app.lookup("logout").send()
+				var link = '/ui/index.clx';
+				location.href=link;
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onSerchclassSubmitSuccess(e){
+				var serchclass = e.control;
+				app.lookup("grd2").redraw()
+			}
+
+			/*
+			 * "강의 추가" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick6(e){
+				var button = e.control;
+				
+				var btnInsert = e.control;
+				
+				var vcGrid = app.lookup("grd2");
+				
+				var vnSelectedRowIdx = vcGrid.getSelectedRowIndex();
+
+				vcGrid.insertRow(vnSelectedRowIdx, true);
+			}
+
+			/*
+			 * 그리드에서 context-value-change 이벤트 발생 시 호출.
+			 * 바인드컨텍스트를 가지고 있는 컨트롤에서 바인드컨텍스트를 이용해 값이 변경된 후에 발생하는 이벤트.
+			 */
+			function onGrd2ContextValueChange(e){
+				var grd2 = e.control;
+			//	alert("변경")
+			//	var vcGrid = app.lookup("grd2");
+			//	
+			//	var code = vcGrid.getSelectedRow().getValue("code")
+			//    
+			//    app.lookup("changeclass").setValue("code", code);
+			//
+			//    app.lookup("selectcode").setValue("code", code);
+			//    app.lookup("check").send()
+			    
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onCheckSubmitSuccess(e){
+				var check = e.control;
+				
+				var vcGrid = app.lookup("grd2");
+				var code = vcGrid.getSelectedRow().getValue("code")
+				var class_name = vcGrid.getSelectedRow().getValue("class_name")
+				var teacher = vcGrid.getSelectedRow().getValue("teacher")
+				var s_date = vcGrid.getSelectedRow().getValue("s_date")
+				var e_date = vcGrid.getSelectedRow().getValue("e_date")
+			    
+			    app.lookup("changeclass").setValue("code", code);
+				app.lookup("changeclass").setValue("class_name", class_name);
+				app.lookup("changeclass").setValue("teacher", teacher);
+				app.lookup("changeclass").setValue("s_date", s_date);
+				app.lookup("changeclass").setValue("e_date", e_date);
+				
+				var check = app.lookup("codecheck").getValue("cknum")
+			    
+			    if(check = 0){
+			    app.lookup("addclass").send()	
+			    
+			    }else{
+			  	app.lookup("update").send()
+			    
+			    }
+			}
+
+			/*
+			 * "업데이트" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			//function onButtonClick(e){
+			//	var button = e.control;
+			//	
+			//	var vcGrid = app.lookup("grd2");	
+			//	var vnSelectedRowIdx = vcGrid.getSelectedRowIndex();
+			//    
+			//    var code = app.lookup("ipb2").value
+			//    var class_name = app.lookup("ipb3").value
+			//    var teacher = app.lookup("ipb4").value
+			//    
+			//	vcGrid.updateRow(vnSelectedRowIdx, {["class_name"]:class_name, ["teacher"]:teacher })
+			//	app.lookup("changeclass").setValue("code", code);
+			//	app.lookup("changeclass").setValue("class_name", class_name);
+			//	app.lookup("changeclass").setValue("teacher", teacher);
+			//	
+			//	app.lookup("update").send()
+			//}
+
+			/*
+			 * 그리드에서 update 이벤트 발생 시 호출.
+			 * Grid의 행 데이터가 수정되었을 때 이벤트.
+			 */
+			function onGrd2Update(e){
+				var grd2 = e.control;
+				var vcGrid = app.lookup("grd2");
+				
+				var code = vcGrid.getSelectedRow().getValue("code")
+			    
+			//    app.lookup("changeclass").setValue("code", code);
+
+			    app.lookup("selectcode").setValue("code", code);
+			    app.lookup("check").send()
+			}
+
+			/*
+			 * "강의 삭제" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick4(e){
+				var button = e.control;
+				var vcGrid = app.lookup("grd2");
+				var code = vcGrid.getSelectedRow().getValue("code")
+				app.lookup("selectcode").setValue("code", code);
+				app.lookup("deleteclass").send()
+				app.lookup("grd2").redraw()
+			}
+
+			/*
+			 * 서브미션에서 submit-done 이벤트 발생 시 호출.
+			 * 응답처리가 모두 종료되면 발생합니다.
+			 */
+			function onDeleteclassSubmitDone(e){
+				var deleteclass = e.control;
+				alert("삭제완료")
+				app.lookup("grd2").redraw()
+				
+			};
 			// End - User Script
 			
 			// Header
+			var dataSet_1 = new cpr.data.DataSet("class");
+			dataSet_1.parseData({
+				"columns": [
+					{
+						"name": "code",
+						"dataType": "string"
+					},
+					{"name": "class_name"},
+					{"name": "teacher"},
+					{
+						"name": "s_date",
+						"dataType": "string"
+					},
+					{
+						"name": "e_date",
+						"dataType": "string"
+					},
+					{"name": "regi_date"}
+				],
+				"rows": []
+			});
+			app.register(dataSet_1);
+			var dataMap_1 = new cpr.data.DataMap("searchname");
+			dataMap_1.parseData({
+				"columns" : [{"name": "class_name"}]
+			});
+			app.register(dataMap_1);
+			
+			var dataMap_2 = new cpr.data.DataMap("loginuser");
+			dataMap_2.parseData({
+				"columns" : [
+					{
+						"name": "user_id",
+						"dataType": "string"
+					},
+					{"name": "user_name"}
+				]
+			});
+			app.register(dataMap_2);
+			
+			var dataMap_3 = new cpr.data.DataMap("selectcode");
+			dataMap_3.parseData({
+				"columns" : [{
+					"name": "code",
+					"dataType": "number"
+				}]
+			});
+			app.register(dataMap_3);
+			
+			var dataMap_4 = new cpr.data.DataMap("changeclass");
+			dataMap_4.parseData({
+				"columns" : [
+					{
+						"name": "code",
+						"dataType": "number"
+					},
+					{"name": "class_name"},
+					{"name": "teacher"},
+					{"name": "s_date"},
+					{"name": "e_date"}
+				]
+			});
+			app.register(dataMap_4);
+			
+			var dataMap_5 = new cpr.data.DataMap("codecheck");
+			dataMap_5.parseData({
+				"columns" : [{
+					"name": "cknum",
+					"dataType": "number"
+				}]
+			});
+			app.register(dataMap_5);
+			var submission_1 = new cpr.protocols.Submission("getclass");
+			submission_1.action = "/getclass";
+			submission_1.addResponseData(dataSet_1, false);
+			if(typeof onGetclassSubmitSuccess == "function") {
+				submission_1.addEventListener("submit-success", onGetclassSubmitSuccess);
+			}
+			app.register(submission_1);
+			
+			var submission_2 = new cpr.protocols.Submission("serchclass");
+			submission_2.action = "/searchclass";
+			submission_2.addRequestData(dataMap_1);
+			submission_2.addResponseData(dataSet_1, false);
+			if(typeof onSerchclassSubmitSuccess == "function") {
+				submission_2.addEventListener("submit-success", onSerchclassSubmitSuccess);
+			}
+			app.register(submission_2);
+			
+			var submission_3 = new cpr.protocols.Submission("getuser");
+			submission_3.method = "get";
+			submission_3.action = "/getusername";
+			submission_3.addResponseData(dataMap_2, false);
+			if(typeof onGetuserSubmitSuccess == "function") {
+				submission_3.addEventListener("submit-success", onGetuserSubmitSuccess);
+			}
+			app.register(submission_3);
+			
+			var submission_4 = new cpr.protocols.Submission("logout");
+			submission_4.action = "/logout";
+			app.register(submission_4);
+			
+			var submission_5 = new cpr.protocols.Submission("update");
+			submission_5.action = "/update";
+			submission_5.addRequestData(dataMap_4);
+			if(typeof onUpdateSubmitSuccess == "function") {
+				submission_5.addEventListener("submit-success", onUpdateSubmitSuccess);
+			}
+			app.register(submission_5);
+			
+			var submission_6 = new cpr.protocols.Submission("check");
+			submission_6.action = "/codecheck";
+			submission_6.addRequestData(dataMap_3);
+			submission_6.addResponseData(dataMap_5, false);
+			if(typeof onCheckSubmitSuccess == "function") {
+				submission_6.addEventListener("submit-success", onCheckSubmitSuccess);
+			}
+			app.register(submission_6);
+			
+			var submission_7 = new cpr.protocols.Submission("addclass");
+			submission_7.action = "/addclass";
+			submission_7.addRequestData(dataMap_4);
+			app.register(submission_7);
+			
+			var submission_8 = new cpr.protocols.Submission("deleteclass");
+			submission_8.action = "/deleteclass";
+			submission_8.addRequestData(dataMap_3);
+			if(typeof onDeleteclassSubmitSuccess == "function") {
+				submission_8.addEventListener("submit-success", onDeleteclassSubmitSuccess);
+			}
+			if(typeof onDeleteclassSubmitDone == "function") {
+				submission_8.addEventListener("submit-done", onDeleteclassSubmitDone);
+			}
+			app.register(submission_8);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023px)", "tablet");
 			app.supportMedia("all and (max-width: 499px)", "mobile");
@@ -37,17 +354,301 @@
 			
 			// UI Configuration
 			var output_1 = new cpr.controls.Output();
-			output_1.value = "수강 관리 페이지 (관리자용)";
+			output_1.value = "수강 관리 페이지(관리자용)";
 			output_1.style.css({
 				"font-size" : "40px",
 				"text-align" : "center"
 			});
 			container.addChild(output_1, {
 				"top": "10px",
-				"width": "374px",
+				"width": "335px",
 				"height": "110px",
-				"left": "calc(50% - 187px)"
+				"left": "calc(50% - 167px)"
 			});
+			
+			var group_1 = new cpr.controls.Container();
+			var dataMapContext_1 = new cpr.bind.DataMapContext(app.lookup("searchname"));
+			group_1.setBindContext(dataMapContext_1);
+			var xYLayout_2 = new cpr.controls.layouts.XYLayout();
+			group_1.setLayout(xYLayout_2);
+			(function(container){
+				var output_2 = new cpr.controls.Output();
+				output_2.value = "강의명";
+				container.addChild(output_2, {
+					"top": "20px",
+					"left": "45px",
+					"width": "64px",
+					"height": "20px"
+				});
+				var inputBox_1 = new cpr.controls.InputBox("ipb1");
+				inputBox_1.bind("value").toDataColumn("class_name");
+				container.addChild(inputBox_1, {
+					"top": "16px",
+					"left": "119px",
+					"width": "542px",
+					"height": "28px"
+				});
+				var button_1 = new cpr.controls.Button();
+				button_1.value = "조회";
+				if(typeof onButtonClick2 == "function") {
+					button_1.addEventListener("click", onButtonClick2);
+				}
+				container.addChild(button_1, {
+					"top": "20px",
+					"left": "671px",
+					"width": "67px",
+					"height": "20px"
+				});
+			})(group_1);
+			container.addChild(group_1, {
+				"top": "143px",
+				"width": "814px",
+				"height": "51px",
+				"left": "calc(50% - 407px)"
+			});
+			
+			var output_3 = new cpr.controls.Output();
+			output_3.value = "님.   환영합니다";
+			container.addChild(output_3, {
+				"top": "25px",
+				"left": "1082px",
+				"width": "112px",
+				"height": "20px"
+			});
+			
+			var output_4 = new cpr.controls.Output("output1");
+			output_4.bind("value").toDataMap(app.lookup("loginuser"), "user_name");
+			container.addChild(output_4, {
+				"top": "25px",
+				"left": "1014px",
+				"width": "72px",
+				"height": "20px"
+			});
+			
+			var button_2 = new cpr.controls.Button();
+			button_2.value = "로그아웃";
+			if(typeof onButtonClick3 == "function") {
+				button_2.addEventListener("click", onButtonClick3);
+			}
+			container.addChild(button_2, {
+				"top": "25px",
+				"left": "1203px",
+				"width": "100px",
+				"height": "20px"
+			});
+			
+			var grid_1 = new cpr.controls.Grid("grd2");
+			grid_1.init({
+				"dataSet": app.lookup("class"),
+				"columns": [
+					{"width": "60px"},
+					{"width": "177px"},
+					{"width": "83px"},
+					{"width": "100px"},
+					{"width": "100px"},
+					{"width": "100px"}
+				],
+				"header": {
+					"rows": [{"height": "24px"}],
+					"cells": [
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 0},
+							"configurator": function(cell){
+								cell.filterable = true;
+								cell.sortable = true;
+								cell.targetColumnName = "code";
+								cell.text = "코드";
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 1},
+							"configurator": function(cell){
+								cell.filterable = true;
+								cell.sortable = true;
+								cell.targetColumnName = "class_name";
+								cell.text = "강의 명";
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 2},
+							"configurator": function(cell){
+								cell.filterable = true;
+								cell.sortable = true;
+								cell.targetColumnName = "teacher";
+								cell.text = "강사명";
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 3},
+							"configurator": function(cell){
+								cell.filterable = true;
+								cell.sortable = true;
+								cell.targetColumnName = "s_date";
+								cell.text = "수업 시작일";
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 4},
+							"configurator": function(cell){
+								cell.filterable = true;
+								cell.sortable = true;
+								cell.targetColumnName = "e_date";
+								cell.text = "수업 종료일";
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 5},
+							"configurator": function(cell){
+								cell.text = "수강 신청일";
+							}
+						}
+					]
+				},
+				"detail": {
+					"rows": [{"height": "24px"}],
+					"cells": [
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 0},
+							"configurator": function(cell){
+								cell.columnName = "code";
+								cell.control = (function(){
+									var inputBox_2 = new cpr.controls.InputBox("ipb2");
+									inputBox_2.readOnly = true;
+									inputBox_2.bind("value").toDataColumn("code");
+									return inputBox_2;
+								})();
+								cell.controlConstraint = {};
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 1},
+							"configurator": function(cell){
+								cell.columnName = "class_name";
+								cell.control = (function(){
+									var inputBox_3 = new cpr.controls.InputBox("ipb3");
+									inputBox_3.bind("value").toDataColumn("class_name");
+									return inputBox_3;
+								})();
+								cell.controlConstraint = {};
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 2},
+							"configurator": function(cell){
+								cell.columnName = "teacher";
+								cell.control = (function(){
+									var inputBox_4 = new cpr.controls.InputBox("ipb4");
+									inputBox_4.bind("value").toDataColumn("teacher");
+									return inputBox_4;
+								})();
+								cell.controlConstraint = {};
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 3},
+							"configurator": function(cell){
+								cell.columnName = "s_date";
+								cell.control = (function(){
+									var inputBox_5 = new cpr.controls.InputBox("ipb5");
+									inputBox_5.bind("value").toDataColumn("s_date");
+									return inputBox_5;
+								})();
+								cell.controlConstraint = {};
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 4},
+							"configurator": function(cell){
+								cell.columnName = "e_date";
+								cell.control = (function(){
+									var inputBox_6 = new cpr.controls.InputBox("ipb6");
+									inputBox_6.bind("value").toDataColumn("e_date");
+									return inputBox_6;
+								})();
+								cell.controlConstraint = {};
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 5},
+							"configurator": function(cell){
+								cell.columnName = "regi_date";
+								cell.control = (function(){
+									var inputBox_7 = new cpr.controls.InputBox("ipb7");
+									inputBox_7.bind("value").toDataColumn("regi_date");
+									return inputBox_7;
+								})();
+								cell.controlConstraint = {};
+							}
+						}
+					]
+				}
+			});
+			if(typeof onGrd2Insert == "function") {
+				grid_1.addEventListener("insert", onGrd2Insert);
+			}
+			if(typeof onGrd2ContextValueChange == "function") {
+				grid_1.addEventListener("context-value-change", onGrd2ContextValueChange);
+			}
+			if(typeof onGrd2Update == "function") {
+				grid_1.addEventListener("update", onGrd2Update);
+			}
+			if(typeof onGrd2SelectionDispose == "function") {
+				grid_1.addEventListener("selection-dispose", onGrd2SelectionDispose);
+			}
+			container.addChild(grid_1, {
+				"top": "224px",
+				"width": "1011px",
+				"height": "200px",
+				"left": "calc(50% - 505px)"
+			});
+			
+			var button_3 = new cpr.controls.Button();
+			button_3.value = "강의 추가";
+			if(typeof onButtonClick6 == "function") {
+				button_3.addEventListener("click", onButtonClick6);
+			}
+			container.addChild(button_3, {
+				"top": "448px",
+				"left": "807px",
+				"width": "101px",
+				"height": "36px"
+			});
+			
+			var button_4 = new cpr.controls.Button();
+			button_4.value = "강의 삭제";
+			if(typeof onButtonClick4 == "function") {
+				button_4.addEventListener("click", onButtonClick4);
+			}
+			container.addChild(button_4, {
+				"top": "448px",
+				"left": "929px",
+				"width": "101px",
+				"height": "36px"
+			});
+			
+			var button_5 = new cpr.controls.Button();
+			button_5.value = "저장";
+			container.addChild(button_5, {
+				"top": "448px",
+				"left": "1182px",
+				"width": "101px",
+				"height": "36px"
+			});
+			
+			var button_6 = new cpr.controls.Button();
+			button_6.value = "업데이트";
+			if(typeof onButtonClick == "function") {
+				button_6.addEventListener("click", onButtonClick);
+			}
+			container.addChild(button_6, {
+				"top": "473px",
+				"left": "308px",
+				"width": "100px",
+				"height": "20px"
+			});
+			if(typeof onBodyInit == "function"){
+				app.addEventListener("init", onBodyInit);
+			}
 		}
 	});
 	app.title = "adminpage";

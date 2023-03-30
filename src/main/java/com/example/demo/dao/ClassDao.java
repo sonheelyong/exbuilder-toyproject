@@ -16,13 +16,16 @@ public class ClassDao {
      @Autowired
      SqlSession sqlSession;
 
-	public List<ClassDTO> getCs() {
-		List<ClassDTO> vo = sqlSession.selectList("class.getclass");
+	public List<ClassDTO> getCs(String user_id) {
+		List<ClassDTO> vo = sqlSession.selectList("class.getclass",user_id);
 		return vo;
 	}
 
-	public List<ClassVo> searchList(String name) {
-		List<ClassVo> vo = sqlSession.selectList("class.serchclass",name);
+	public List<ClassDTO> searchList(String name, String user_id) {
+		HashMap map = new HashMap();
+		map.put("name", name);
+		map.put("user_id", user_id);
+		List<ClassDTO> vo = sqlSession.selectList("class.serchclass",map);
 		return vo;
 	}
 
@@ -49,6 +52,25 @@ public class ClassDao {
 		map.put("code", code);
 		map.put("user_id", user_id);
 		sqlSession.delete("class.cancle", map);
+		
+	}
+
+	public void updateclass(ClassVo vo) {
+        sqlSession.update("class.updateclass",vo);
+	}
+
+	public int checkCode(int code) {
+		int check = sqlSession.selectOne("class.checkCode",code);
+		return check;
+	}
+
+	public void addclass(ClassVo vo) {
+		sqlSession.insert("class.addclass",vo);
+		
+	}
+
+	public void deleteclass(int code) {
+		sqlSession.delete("class.deleteclass",code);
 		
 	}
 }

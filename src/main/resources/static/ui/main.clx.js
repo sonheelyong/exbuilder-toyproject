@@ -168,6 +168,7 @@
 			function onRegiclassSubmitSuccess(e){
 				var regiclass = e.control;
 				alert("수강신청이 완료 되었습니다.")
+				app.lookup("getclass").send();
 			}
 
 			/*
@@ -177,6 +178,7 @@
 			function onCancleSubmitSuccess2(e){
 				var cancle = e.control;
 				alert("수강취소가 완료되었습니다.")
+				app.lookup("getclass").send();
 			};
 			// End - User Script
 			
@@ -197,7 +199,8 @@
 					{
 						"name": "e_date",
 						"dataType": "string"
-					}
+					},
+					{"name": "regi_date"}
 				],
 				"rows": []
 			});
@@ -239,7 +242,7 @@
 			app.register(dataMap_4);
 			var submission_1 = new cpr.protocols.Submission("getclass");
 			submission_1.action = "/getclass";
-			submission_1.addResponseData(dataSet_1, true);
+			submission_1.addResponseData(dataSet_1, false);
 			if(typeof onGetclassSubmitSuccess == "function") {
 				submission_1.addEventListener("submit-success", onGetclassSubmitSuccess);
 			}
@@ -445,7 +448,7 @@
 								cell.filterable = true;
 								cell.sortable = true;
 								cell.targetColumnName = "code";
-								cell.text = "번호";
+								cell.text = "코드";
 							}
 						},
 						{
@@ -528,6 +531,7 @@
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 5},
 							"configurator": function(cell){
+								cell.columnName = "regi_date";
 							}
 						}
 					]
