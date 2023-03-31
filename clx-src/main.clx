@@ -106,14 +106,14 @@
     </cl:button>
     <cl:button std:sid="button-e5b4e8d3" id="btn1" value="수강신청">
       <cl:listener std:sid="listener-951f80ba" name="click" handler="onButtonClick5"/>
-      <cl:xylayoutdata std:sid="xyl-data-a66eb21c" top="454px" left="903px" width="100px" height="47px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:xylayoutdata std:sid="xyl-data-a66eb21c" top="546px" left="904px" width="100px" height="47px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:button>
     <cl:button std:sid="button-73cb8918" id="btn2" value="수강취소">
       <cl:listener std:sid="listener-bec5d991" name="click" handler="onButtonClick"/>
-      <cl:xylayoutdata std:sid="xyl-data-a3b90fac" top="454px" left="1057px" width="100px" height="48px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:xylayoutdata std:sid="xyl-data-a3b90fac" top="546px" left="1038px" width="100px" height="48px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:button>
     <cl:grid std:sid="grid-76d3d441" id="grd2" readonly="true" datasetid="class">
-      <cl:xylayoutdata std:sid="xyl-data-7bd5d0e3" top="224px" width="1011px" height="200px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+      <cl:xylayoutdata std:sid="xyl-data-7bd5d0e3" top="224px" width="1010px" height="300px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
       <cl:gridcolumn std:sid="g-column-6efeb3ea" width="60px"/>
       <cl:gridcolumn std:sid="g-column-3c1c1dc0" width="177px"/>
       <cl:gridcolumn std:sid="g-column-ffff84dd" width="83px"/>
@@ -134,8 +134,16 @@
         <cl:gridcell std:sid="gd-cell-e27464f7" rowindex="0" colindex="0" columnname="code"/>
         <cl:gridcell std:sid="gd-cell-f21f4ede" rowindex="0" colindex="1" columnname="class_name"/>
         <cl:gridcell std:sid="gd-cell-84e8fc3d" rowindex="0" colindex="2" columnname="teacher"/>
-        <cl:gridcell std:sid="gd-cell-cc351d7f" rowindex="0" colindex="3" columnname="s_date"/>
-        <cl:gridcell std:sid="gd-cell-d3e73312" rowindex="0" colindex="4" columnname="e_date"/>
+        <cl:gridcell std:sid="gd-cell-cc351d7f" rowindex="0" colindex="3" columnname="s_date">
+          <cl:dateinput std:sid="d-input-e069dc90" id="dti1">
+            <cl:celldata std:sid="c-data-0c6037cc"/>
+          </cl:dateinput>
+        </cl:gridcell>
+        <cl:gridcell std:sid="gd-cell-d3e73312" rowindex="0" colindex="4" columnname="e_date">
+          <cl:dateinput std:sid="d-input-450715e1" id="dti2">
+            <cl:celldata std:sid="c-data-d3af33e5"/>
+          </cl:dateinput>
+        </cl:gridcell>
         <cl:gridcell std:sid="gd-cell-e02d6d6a" rowindex="0" colindex="5" columnname="regi_date"/>
       </cl:griddetail>
     </cl:grid>

@@ -67,14 +67,13 @@ function onSerchclassSubmitSuccess(e){
  */
 function onButtonClick6(e){
 	var button = e.control;
-	
-	var btnInsert = e.control;
-	
-	var vcGrid = app.lookup("grd2");
-	
-	var vnSelectedRowIdx = vcGrid.getSelectedRowIndex();
-
-	vcGrid.insertRow(vnSelectedRowIdx, true);
+	app.openDialog("addclasspage", {width : 800, height : 300}, function(dialog){
+		dialog.ready(function(dialogApp){
+			dialog.headerTitle = "수강 추가";
+		});
+	}).then(function(returnValue){
+		alert(JSON.stringify(returnValue));
+	});
 }
 
 /*
@@ -174,7 +173,7 @@ function onButtonClick4(e){
 	var code = vcGrid.getSelectedRow().getValue("code")
 	app.lookup("selectcode").setValue("code", code);
 	app.lookup("deleteclass").send()
-	app.lookup("grd2").redraw()
+	
 }
 
 /*
@@ -183,7 +182,28 @@ function onButtonClick4(e){
  */
 function onDeleteclassSubmitDone(e){
 	var deleteclass = e.control;
+	app.lookup("getclass").send();
+	
 	alert("삭제완료")
 	app.lookup("grd2").redraw()
 	
+}
+
+/*
+ * "보기" 버튼에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onButtonClick(e){
+	var button = e.control;
+    var vcGrid = app.lookup("grd2");
+	var code = vcGrid.getSelectedRow().getValue("code")
+	
+	app.openDialog("regiuser", {width : 800, height : 300}, function(dialog){
+		dialog.ready(function(dialogApp){
+			dialog.headerTitle = "수강 신청 인원 보기";
+			dialog.initValue = {code: code};
+		});
+	}).then(function(returnValue){
+		alert(JSON.stringify(returnValue));
+	});
 }

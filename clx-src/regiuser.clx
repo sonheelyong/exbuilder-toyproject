@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-4580a7dd" version="1.0.4300">
+  <head std:sid="head-230ef74a">
+    <screen std:sid="screen-96face67" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-a9275f9b" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-a122728e" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-c93c446e">
+      <cl:dataset std:sid="d-set-f0ed4f5d" id="regi_user">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-4bc2dace" name="number"/>
+          <cl:datacolumn std:sid="d-column-5d959dd9" name="user_id"/>
+          <cl:datacolumn std:sid="d-column-f506a817" name="user_name"/>
+          <cl:datacolumn std:sid="d-column-fe184e89" name="regi_date"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:datamap std:sid="d-map-eb092ae7" id="class">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-e9240c3b" name="class_name"/>
+          <cl:datacolumn std:sid="d-column-ebe5b589" name="teacher"/>
+          <cl:datacolumn std:sid="d-column-fc197cd6" name="s_date"/>
+          <cl:datacolumn std:sid="d-column-c50895ff" name="e_date"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:datamap std:sid="d-map-589410d2" id="code">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-30ae3bab" name="code"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-31ed9396" id="getclass">
+        <cl:requestdata dataid="code"/>
+        <cl:responsedata dataid="class"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-b6da745f">
+    <cl:output std:sid="output-51d43f4c" value="강의 명 :">
+      <cl:xylayoutdata std:sid="xyl-data-7d09546a" top="96px" left="30px" width="60px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-5d6075ee" value="강사 명 :">
+      <cl:xylayoutdata std:sid="xyl-data-0e3fc921" top="96px" left="221px" width="60px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-6006900c" value="강의 시작일 :">
+      <cl:xylayoutdata std:sid="xyl-data-9bc10d8e" top="96px" left="379px" width="84px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-957a3a0e" value="강의 종료일 :">
+      <cl:xylayoutdata std:sid="xyl-data-7a3a1365" top="96px" left="582px" width="84px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:inputbox std:sid="i-box-ca2e9ed5" id="ipb1">
+      <cl:datamapbind property="value" datacontrolid="class" columnname="class_name"/>
+      <cl:xylayoutdata std:sid="xyl-data-39fbb2bc" top="96px" left="89px" width="113px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:inputbox std:sid="i-box-54a81bc7" id="ipb2">
+      <cl:datamapbind property="value" datacontrolid="class" columnname="teacher"/>
+      <cl:xylayoutdata std:sid="xyl-data-c9379176" top="96px" left="280px" width="79px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:dateinput std:sid="d-input-e5c78a84" id="dti1">
+      <cl:datamapbind property="value" datacontrolid="class" columnname="s_date"/>
+      <cl:xylayoutdata std:sid="xyl-data-ddbf0483" top="96px" left="462px" width="110px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:dateinput>
+    <cl:dateinput std:sid="d-input-a753b8bc" id="dti2">
+      <cl:datamapbind property="value" datacontrolid="class" columnname="e_date"/>
+      <cl:xylayoutdata std:sid="xyl-data-d2a6019b" top="96px" left="665px" width="110px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:dateinput>
+    <cl:grid std:sid="grid-1d91cda9" id="grd1" datasetid="regi_user">
+      <cl:xylayoutdata std:sid="xyl-data-822d7858" top="178px" left="30px" width="745px" height="200px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:gridcolumn std:sid="g-column-5ef3efb7"/>
+      <cl:gridcolumn std:sid="g-column-7e5350bb"/>
+      <cl:gridcolumn std:sid="g-column-13a2528c"/>
+      <cl:gridcolumn std:sid="g-column-40654c3f"/>
+      <cl:gridheader std:sid="gh-band-24c136cb">
+        <cl:gridrow std:sid="g-row-6beb2144"/>
+        <cl:gridcell std:sid="gh-cell-f9a4bd86" rowindex="0" colindex="0" targetcolumnname="number" sortable="false" filterable="false" text="number"/>
+        <cl:gridcell std:sid="gh-cell-11340ce9" rowindex="0" colindex="1" targetcolumnname="user_id" sortable="false" filterable="false" text="user_id"/>
+        <cl:gridcell std:sid="gh-cell-8679dd95" rowindex="0" colindex="2" targetcolumnname="user_name" sortable="false" filterable="false" text="user_name"/>
+        <cl:gridcell std:sid="gh-cell-556e4464" rowindex="0" colindex="3" targetcolumnname="regi_date" sortable="false" filterable="false" text="regi_date"/>
+      </cl:gridheader>
+      <cl:griddetail std:sid="gd-band-92de73a0">
+        <cl:gridrow std:sid="g-row-0ebe2eef"/>
+        <cl:gridcell std:sid="gd-cell-29ec505e" rowindex="0" colindex="0" columnname="number"/>
+        <cl:gridcell std:sid="gd-cell-ae2446d5" rowindex="0" colindex="1" columnname="user_id"/>
+        <cl:gridcell std:sid="gd-cell-7d3c493a" rowindex="0" colindex="2" columnname="user_name"/>
+        <cl:gridcell std:sid="gd-cell-a90d245b" rowindex="0" colindex="3" columnname="regi_date"/>
+      </cl:griddetail>
+    </cl:grid>
+    <cl:xylayout std:sid="xylayout-4ba1c3ec"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

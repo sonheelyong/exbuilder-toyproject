@@ -117,7 +117,7 @@
       <cl:listener std:sid="listener-65d1b08d" name="context-value-change" handler="onGrd2ContextValueChange"/>
       <cl:listener std:sid="listener-00fa14f8" name="update" handler="onGrd2Update"/>
       <cl:listener std:sid="listener-5afc11ad" name="selection-dispose" handler="onGrd2SelectionDispose"/>
-      <cl:xylayoutdata std:sid="xyl-data-7bd5d0e3" top="224px" width="1011px" height="200px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+      <cl:xylayoutdata std:sid="xyl-data-7bd5d0e3" top="224px" width="1010px" height="300px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
       <cl:gridcolumn std:sid="g-column-6efeb3ea" width="60px"/>
       <cl:gridcolumn std:sid="g-column-3c1c1dc0" width="177px"/>
       <cl:gridcolumn std:sid="g-column-ffff84dd" width="83px"/>
@@ -131,7 +131,7 @@
         <cl:gridcell std:sid="gh-cell-6669e727" rowindex="0" colindex="2" targetcolumnname="teacher" sortable="true" filterable="true" text="강사명"/>
         <cl:gridcell std:sid="gh-cell-c9beb838" rowindex="0" colindex="3" targetcolumnname="s_date" sortable="true" filterable="true" text="수업 시작일"/>
         <cl:gridcell std:sid="gh-cell-6b96985b" rowindex="0" colindex="4" targetcolumnname="e_date" sortable="true" filterable="true" text="수업 종료일"/>
-        <cl:gridcell std:sid="gh-cell-40452fa6" rowindex="0" colindex="5" text="수강 신청일"/>
+        <cl:gridcell std:sid="gh-cell-40452fa6" rowindex="0" colindex="5" text=""/>
       </cl:gridheader>
       <cl:griddetail std:sid="gd-band-7734cf08">
         <cl:gridrow std:sid="g-row-c78b8f33"/>
@@ -151,36 +151,30 @@
           </cl:inputbox>
         </cl:gridcell>
         <cl:gridcell std:sid="gd-cell-cc351d7f" rowindex="0" colindex="3" columnname="s_date">
-          <cl:inputbox std:sid="i-box-ba1a924e" id="ipb5">
-            <cl:celldata std:sid="c-data-84c1234a"/>
-          </cl:inputbox>
+          <cl:dateinput std:sid="d-input-618e1a19" id="dti1">
+            <cl:celldata std:sid="c-data-3dc9a39f"/>
+          </cl:dateinput>
         </cl:gridcell>
         <cl:gridcell std:sid="gd-cell-d3e73312" rowindex="0" colindex="4" columnname="e_date">
-          <cl:inputbox std:sid="i-box-13d6d566" id="ipb6">
-            <cl:celldata std:sid="c-data-5add5662"/>
-          </cl:inputbox>
+          <cl:dateinput std:sid="d-input-f38c4ded" id="dti2">
+            <cl:celldata std:sid="c-data-72e38e3e"/>
+          </cl:dateinput>
         </cl:gridcell>
-        <cl:gridcell std:sid="gd-cell-e02d6d6a" rowindex="0" colindex="5" columnname="regi_date">
-          <cl:inputbox std:sid="i-box-7e78caad" id="ipb7">
-            <cl:celldata std:sid="c-data-50bf8cfb"/>
-          </cl:inputbox>
+        <cl:gridcell std:sid="gd-cell-e02d6d6a" rowindex="0" colindex="5">
+          <cl:button std:sid="button-66df719a" value="신청 인원 보기">
+            <cl:listener std:sid="listener-e3984be0" name="click" handler="onButtonClick"/>
+            <cl:celldata std:sid="c-data-6d34f8fb"/>
+          </cl:button>
         </cl:gridcell>
       </cl:griddetail>
     </cl:grid>
     <cl:button std:sid="button-f14fb956" value="강의 추가">
       <cl:listener std:sid="listener-69b9f77b" name="click" handler="onButtonClick6"/>
-      <cl:xylayoutdata std:sid="xyl-data-d65a48d8" top="448px" left="807px" width="101px" height="36px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:xylayoutdata std:sid="xyl-data-d65a48d8" top="541px" left="923px" width="101px" height="36px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:button>
     <cl:button std:sid="button-a7713a06" value="강의 삭제">
       <cl:listener std:sid="listener-aee9685b" name="click" handler="onButtonClick4"/>
-      <cl:xylayoutdata std:sid="xyl-data-3e445010" top="448px" left="929px" width="101px" height="36px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-    </cl:button>
-    <cl:button std:sid="button-b6758393" value="저장">
-      <cl:xylayoutdata std:sid="xyl-data-d2e6bae4" top="448px" left="1182px" width="101px" height="36px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-    </cl:button>
-    <cl:button std:sid="button-1e11153c" value="업데이트">
-      <cl:listener std:sid="listener-955031cf" name="click" handler="onButtonClick"/>
-      <cl:xylayoutdata std:sid="xyl-data-5559ea10" top="473px" left="308px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:xylayoutdata std:sid="xyl-data-3e445010" top="541px" left="1057px" width="101px" height="36px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:button>
     <cl:xylayout std:sid="xylayout-d9a4e222"/>
   </body>

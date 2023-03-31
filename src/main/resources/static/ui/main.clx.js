@@ -409,8 +409,8 @@
 				button_3.addEventListener("click", onButtonClick5);
 			}
 			container.addChild(button_3, {
-				"top": "454px",
-				"left": "903px",
+				"top": "546px",
+				"left": "904px",
 				"width": "100px",
 				"height": "47px"
 			});
@@ -421,8 +421,8 @@
 				button_4.addEventListener("click", onButtonClick);
 			}
 			container.addChild(button_4, {
-				"top": "454px",
-				"left": "1057px",
+				"top": "546px",
+				"left": "1038px",
 				"width": "100px",
 				"height": "48px"
 			});
@@ -520,12 +520,24 @@
 							"constraint": {"rowIndex": 0, "colIndex": 3},
 							"configurator": function(cell){
 								cell.columnName = "s_date";
+								cell.control = (function(){
+									var dateInput_1 = new cpr.controls.DateInput("dti1");
+									dateInput_1.bind("value").toDataColumn("s_date");
+									return dateInput_1;
+								})();
+								cell.controlConstraint = {};
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 4},
 							"configurator": function(cell){
 								cell.columnName = "e_date";
+								cell.control = (function(){
+									var dateInput_2 = new cpr.controls.DateInput("dti2");
+									dateInput_2.bind("value").toDataColumn("e_date");
+									return dateInput_2;
+								})();
+								cell.controlConstraint = {};
 							}
 						},
 						{
@@ -539,8 +551,8 @@
 			});
 			container.addChild(grid_1, {
 				"top": "224px",
-				"width": "1011px",
-				"height": "200px",
+				"width": "1010px",
+				"height": "300px",
 				"left": "calc(50% - 505px)"
 			});
 			if(typeof onBodyInit == "function"){

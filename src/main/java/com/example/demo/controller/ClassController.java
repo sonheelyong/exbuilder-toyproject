@@ -107,9 +107,9 @@ public class ClassController {
    // 강의 추가
    @PostMapping("/addclass")
    public View addclass( DataRequest dataRequest ) {
-	   ParameterGroup param = dataRequest.getParameterGroup("changeclass");
+	   ParameterGroup param = dataRequest.getParameterGroup("addclass");
 	   ClassVo vo = new ClassVo();
-	   vo.setCode(Integer.parseInt(param.getValue("code")));
+	   
 	   vo.setClass_name(param.getValue("class_name"));
 	   vo.setTeacher(param.getValue("teacher"));
 	   vo.setS_date(param.getValue("s_date"));

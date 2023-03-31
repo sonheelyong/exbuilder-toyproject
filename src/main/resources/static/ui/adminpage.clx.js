@@ -80,14 +80,13 @@
 			 */
 			function onButtonClick6(e){
 				var button = e.control;
-				
-				var btnInsert = e.control;
-				
-				var vcGrid = app.lookup("grd2");
-				
-				var vnSelectedRowIdx = vcGrid.getSelectedRowIndex();
-
-				vcGrid.insertRow(vnSelectedRowIdx, true);
+				app.openDialog("addclasspage", {width : 800, height : 300}, function(dialog){
+					dialog.ready(function(dialogApp){
+						dialog.headerTitle = "수강 추가";
+					});
+				}).then(function(returnValue){
+					alert(JSON.stringify(returnValue));
+				});
 			}
 
 			/*
@@ -187,7 +186,7 @@
 				var code = vcGrid.getSelectedRow().getValue("code")
 				app.lookup("selectcode").setValue("code", code);
 				app.lookup("deleteclass").send()
-				app.lookup("grd2").redraw()
+				
 			}
 
 			/*
@@ -196,9 +195,30 @@
 			 */
 			function onDeleteclassSubmitDone(e){
 				var deleteclass = e.control;
+				app.lookup("getclass").send();
+				
 				alert("삭제완료")
 				app.lookup("grd2").redraw()
 				
+			}
+
+			/*
+			 * "보기" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick(e){
+				var button = e.control;
+			    var vcGrid = app.lookup("grd2");
+				var code = vcGrid.getSelectedRow().getValue("code")
+				
+				app.openDialog("regiuser", {width : 800, height : 300}, function(dialog){
+					dialog.ready(function(dialogApp){
+						dialog.headerTitle = "수강 신청 인원 보기";
+						dialog.initValue = {code: code};
+					});
+				}).then(function(returnValue){
+					alert(JSON.stringify(returnValue));
+				});
 			};
 			// End - User Script
 			
@@ -499,7 +519,7 @@
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 5},
 							"configurator": function(cell){
-								cell.text = "수강 신청일";
+								cell.text = "";
 							}
 						}
 					]
@@ -549,9 +569,9 @@
 							"configurator": function(cell){
 								cell.columnName = "s_date";
 								cell.control = (function(){
-									var inputBox_5 = new cpr.controls.InputBox("ipb5");
-									inputBox_5.bind("value").toDataColumn("s_date");
-									return inputBox_5;
+									var dateInput_1 = new cpr.controls.DateInput("dti1");
+									dateInput_1.bind("value").toDataColumn("s_date");
+									return dateInput_1;
 								})();
 								cell.controlConstraint = {};
 							}
@@ -561,9 +581,9 @@
 							"configurator": function(cell){
 								cell.columnName = "e_date";
 								cell.control = (function(){
-									var inputBox_6 = new cpr.controls.InputBox("ipb6");
-									inputBox_6.bind("value").toDataColumn("e_date");
-									return inputBox_6;
+									var dateInput_2 = new cpr.controls.DateInput("dti2");
+									dateInput_2.bind("value").toDataColumn("e_date");
+									return dateInput_2;
 								})();
 								cell.controlConstraint = {};
 							}
@@ -571,11 +591,13 @@
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 5},
 							"configurator": function(cell){
-								cell.columnName = "regi_date";
 								cell.control = (function(){
-									var inputBox_7 = new cpr.controls.InputBox("ipb7");
-									inputBox_7.bind("value").toDataColumn("regi_date");
-									return inputBox_7;
+									var button_3 = new cpr.controls.Button();
+									button_3.value = "신청 인원 보기";
+									if(typeof onButtonClick == "function") {
+										button_3.addEventListener("click", onButtonClick);
+									}
+									return button_3;
 								})();
 								cell.controlConstraint = {};
 							}
@@ -597,54 +619,33 @@
 			}
 			container.addChild(grid_1, {
 				"top": "224px",
-				"width": "1011px",
-				"height": "200px",
+				"width": "1010px",
+				"height": "300px",
 				"left": "calc(50% - 505px)"
 			});
 			
-			var button_3 = new cpr.controls.Button();
-			button_3.value = "강의 추가";
-			if(typeof onButtonClick6 == "function") {
-				button_3.addEventListener("click", onButtonClick6);
-			}
-			container.addChild(button_3, {
-				"top": "448px",
-				"left": "807px",
-				"width": "101px",
-				"height": "36px"
-			});
-			
 			var button_4 = new cpr.controls.Button();
-			button_4.value = "강의 삭제";
-			if(typeof onButtonClick4 == "function") {
-				button_4.addEventListener("click", onButtonClick4);
+			button_4.value = "강의 추가";
+			if(typeof onButtonClick6 == "function") {
+				button_4.addEventListener("click", onButtonClick6);
 			}
 			container.addChild(button_4, {
-				"top": "448px",
-				"left": "929px",
+				"top": "541px",
+				"left": "923px",
 				"width": "101px",
 				"height": "36px"
 			});
 			
 			var button_5 = new cpr.controls.Button();
-			button_5.value = "저장";
+			button_5.value = "강의 삭제";
+			if(typeof onButtonClick4 == "function") {
+				button_5.addEventListener("click", onButtonClick4);
+			}
 			container.addChild(button_5, {
-				"top": "448px",
-				"left": "1182px",
+				"top": "541px",
+				"left": "1057px",
 				"width": "101px",
 				"height": "36px"
-			});
-			
-			var button_6 = new cpr.controls.Button();
-			button_6.value = "업데이트";
-			if(typeof onButtonClick == "function") {
-				button_6.addEventListener("click", onButtonClick);
-			}
-			container.addChild(button_6, {
-				"top": "473px",
-				"left": "308px",
-				"width": "100px",
-				"height": "20px"
 			});
 			if(typeof onBodyInit == "function"){
 				app.addEventListener("init", onBodyInit);
