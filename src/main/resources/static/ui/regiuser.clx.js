@@ -16,7 +16,20 @@
 			 * Created at 2023. 3. 31. 오전 10:58:11.
 			 *
 			 * @author user
-			 ************************************************/;
+			 ************************************************/
+
+			/*
+			 * 루트 컨테이너에서 init 이벤트 발생 시 호출.
+			 * 앱이 최초 구성될 때 발생하는 이벤트 입니다.
+			 */
+				function onBodyInit(e){
+				var initValue = app.getHost().initValue;
+				var code = initValue.code
+
+				app.lookup("code").setValue("code", code);
+				app.lookup("getcoderegi").send()
+
+			};
 			// End - User Script
 			
 			// Header
@@ -25,12 +38,11 @@
 				"columns" : [
 					{"name": "number"},
 					{"name": "user_id"},
-					{"name": "user_name"},
 					{"name": "regi_date"}
 				]
 			});
 			app.register(dataSet_1);
-			var dataMap_1 = new cpr.data.DataMap("class");
+			var dataMap_1 = new cpr.data.DataMap("regiclass");
 			dataMap_1.parseData({
 				"columns" : [
 					{"name": "class_name"},
@@ -43,10 +55,14 @@
 			
 			var dataMap_2 = new cpr.data.DataMap("code");
 			dataMap_2.parseData({
-				"columns" : [{"name": "code"}]
+				"columns" : [{
+					"name": "code",
+					"dataType": "number"
+				}]
 			});
 			app.register(dataMap_2);
-			var submission_1 = new cpr.protocols.Submission("getclass");
+			var submission_1 = new cpr.protocols.Submission("getcoderegi");
+			submission_1.action = "/getcodeclass";
 			submission_1.addRequestData(dataMap_2);
 			submission_1.addResponseData(dataMap_1, false);
 			app.register(submission_1);
@@ -103,7 +119,7 @@
 			});
 			
 			var inputBox_1 = new cpr.controls.InputBox("ipb1");
-			inputBox_1.bind("value").toDataMap(app.lookup("class"), "class_name");
+			inputBox_1.bind("value").toDataMap(app.lookup("regiclass"), "class_name");
 			container.addChild(inputBox_1, {
 				"top": "96px",
 				"left": "89px",
@@ -112,7 +128,7 @@
 			});
 			
 			var inputBox_2 = new cpr.controls.InputBox("ipb2");
-			inputBox_2.bind("value").toDataMap(app.lookup("class"), "teacher");
+			inputBox_2.bind("value").toDataMap(app.lookup("regiclass"), "teacher");
 			container.addChild(inputBox_2, {
 				"top": "96px",
 				"left": "280px",
@@ -121,7 +137,7 @@
 			});
 			
 			var dateInput_1 = new cpr.controls.DateInput("dti1");
-			dateInput_1.bind("value").toDataMap(app.lookup("class"), "s_date");
+			dateInput_1.bind("value").toDataMap(app.lookup("regiclass"), "s_date");
 			container.addChild(dateInput_1, {
 				"top": "96px",
 				"left": "462px",
@@ -130,7 +146,7 @@
 			});
 			
 			var dateInput_2 = new cpr.controls.DateInput("dti2");
-			dateInput_2.bind("value").toDataMap(app.lookup("class"), "e_date");
+			dateInput_2.bind("value").toDataMap(app.lookup("regiclass"), "e_date");
 			container.addChild(dateInput_2, {
 				"top": "96px",
 				"left": "665px",
@@ -140,8 +156,8 @@
 			
 			var grid_1 = new cpr.controls.Grid("grd1");
 			grid_1.init({
-				"dataSet": app.lookup("regi_user"),
 				"columns": [
+					{"width": "100px"},
 					{"width": "100px"},
 					{"width": "100px"},
 					{"width": "100px"},
@@ -153,37 +169,26 @@
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 0},
 							"configurator": function(cell){
-								cell.filterable = false;
-								cell.sortable = false;
-								cell.targetColumnName = "number";
-								cell.text = "number";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 1},
 							"configurator": function(cell){
-								cell.filterable = false;
-								cell.sortable = false;
-								cell.targetColumnName = "user_id";
-								cell.text = "user_id";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 2},
 							"configurator": function(cell){
-								cell.filterable = false;
-								cell.sortable = false;
-								cell.targetColumnName = "user_name";
-								cell.text = "user_name";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 3},
 							"configurator": function(cell){
-								cell.filterable = false;
-								cell.sortable = false;
-								cell.targetColumnName = "regi_date";
-								cell.text = "regi_date";
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 4},
+							"configurator": function(cell){
 							}
 						}
 					]
@@ -194,36 +199,40 @@
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 0},
 							"configurator": function(cell){
-								cell.columnName = "number";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 1},
 							"configurator": function(cell){
-								cell.columnName = "user_id";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 2},
 							"configurator": function(cell){
-								cell.columnName = "user_name";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 3},
 							"configurator": function(cell){
-								cell.columnName = "regi_date";
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 4},
+							"configurator": function(cell){
 							}
 						}
 					]
 				}
 			});
 			container.addChild(grid_1, {
-				"top": "178px",
-				"left": "30px",
-				"width": "745px",
+				"top": "174px",
+				"left": "112px",
+				"width": "618px",
 				"height": "200px"
 			});
+			if(typeof onBodyInit == "function"){
+				app.addEventListener("init", onBodyInit);
+			}
 		}
 	});
 	app.title = "regiuser";

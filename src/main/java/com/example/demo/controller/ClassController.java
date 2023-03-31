@@ -18,6 +18,7 @@ import com.example.demo.service.ClassService;
 import com.example.demo.vo.ClassVo;
 import com.example.demo.vo.UserVo;
 import com.example.demo.vo.ClassDTO;
+import com.example.demo.vo.RegiDTO;
 
 @Controller
 public class ClassController {
@@ -46,6 +47,18 @@ public class ClassController {
 	  List<ClassDTO> vo = classService.searchList(name,user_id);
 	  dataRequest.setResponse("class", vo);
 	  System.out.println(vo.toString());
+	  return new JSONDataView();
+  }
+  
+  // 코드로 강의 조회
+  @PostMapping("/getcoderegi")
+  public View getcodeclass(DataRequest dataRequest) {
+	  
+	  ParameterGroup param = dataRequest.getParameterGroup("code");
+	  int code = Integer.parseInt(param.getValue("code"));
+	  
+	  List<RegiDTO> vo = classService.getcoderegi(code); 
+	 
 	  return new JSONDataView();
   }
   

@@ -9,11 +9,10 @@
         <cl:datacolumnlist>
           <cl:datacolumn std:sid="d-column-4bc2dace" name="number"/>
           <cl:datacolumn std:sid="d-column-5d959dd9" name="user_id"/>
-          <cl:datacolumn std:sid="d-column-f506a817" name="user_name"/>
           <cl:datacolumn std:sid="d-column-fe184e89" name="regi_date"/>
         </cl:datacolumnlist>
       </cl:dataset>
-      <cl:datamap std:sid="d-map-eb092ae7" id="class">
+      <cl:datamap std:sid="d-map-eb092ae7" id="regiclass">
         <cl:datacolumnlist>
           <cl:datacolumn std:sid="d-column-e9240c3b" name="class_name"/>
           <cl:datacolumn std:sid="d-column-ebe5b589" name="teacher"/>
@@ -23,17 +22,18 @@
       </cl:datamap>
       <cl:datamap std:sid="d-map-589410d2" id="code">
         <cl:datacolumnlist>
-          <cl:datacolumn std:sid="d-column-30ae3bab" name="code"/>
+          <cl:datacolumn std:sid="d-column-30ae3bab" name="code" datatype="number"/>
         </cl:datacolumnlist>
       </cl:datamap>
-      <cl:submission std:sid="submission-31ed9396" id="getclass">
+      <cl:submission std:sid="submission-31ed9396" id="getcoderegi" action="/getcodeclass">
         <cl:requestdata dataid="code"/>
-        <cl:responsedata dataid="class"/>
+        <cl:responsedata dataid="regiclass"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
   <body std:sid="body-b6da745f">
+    <cl:listener std:sid="listener-cf9add06" name="init" handler="onBodyInit"/>
     <cl:output std:sid="output-51d43f4c" value="강의 명 :">
       <cl:xylayoutdata std:sid="xyl-data-7d09546a" top="96px" left="30px" width="60px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:output>
@@ -47,40 +47,43 @@
       <cl:xylayoutdata std:sid="xyl-data-7a3a1365" top="96px" left="582px" width="84px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:output>
     <cl:inputbox std:sid="i-box-ca2e9ed5" id="ipb1">
-      <cl:datamapbind property="value" datacontrolid="class" columnname="class_name"/>
+      <cl:datamapbind property="value" datacontrolid="regiclass" columnname="class_name"/>
       <cl:xylayoutdata std:sid="xyl-data-39fbb2bc" top="96px" left="89px" width="113px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:inputbox>
     <cl:inputbox std:sid="i-box-54a81bc7" id="ipb2">
-      <cl:datamapbind property="value" datacontrolid="class" columnname="teacher"/>
+      <cl:datamapbind property="value" datacontrolid="regiclass" columnname="teacher"/>
       <cl:xylayoutdata std:sid="xyl-data-c9379176" top="96px" left="280px" width="79px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:inputbox>
     <cl:dateinput std:sid="d-input-e5c78a84" id="dti1">
-      <cl:datamapbind property="value" datacontrolid="class" columnname="s_date"/>
+      <cl:datamapbind property="value" datacontrolid="regiclass" columnname="s_date"/>
       <cl:xylayoutdata std:sid="xyl-data-ddbf0483" top="96px" left="462px" width="110px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:dateinput>
     <cl:dateinput std:sid="d-input-a753b8bc" id="dti2">
-      <cl:datamapbind property="value" datacontrolid="class" columnname="e_date"/>
+      <cl:datamapbind property="value" datacontrolid="regiclass" columnname="e_date"/>
       <cl:xylayoutdata std:sid="xyl-data-d2a6019b" top="96px" left="665px" width="110px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:dateinput>
-    <cl:grid std:sid="grid-1d91cda9" id="grd1" datasetid="regi_user">
-      <cl:xylayoutdata std:sid="xyl-data-822d7858" top="178px" left="30px" width="745px" height="200px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      <cl:gridcolumn std:sid="g-column-5ef3efb7"/>
-      <cl:gridcolumn std:sid="g-column-7e5350bb"/>
-      <cl:gridcolumn std:sid="g-column-13a2528c"/>
-      <cl:gridcolumn std:sid="g-column-40654c3f"/>
-      <cl:gridheader std:sid="gh-band-24c136cb">
-        <cl:gridrow std:sid="g-row-6beb2144"/>
-        <cl:gridcell std:sid="gh-cell-f9a4bd86" rowindex="0" colindex="0" targetcolumnname="number" sortable="false" filterable="false" text="number"/>
-        <cl:gridcell std:sid="gh-cell-11340ce9" rowindex="0" colindex="1" targetcolumnname="user_id" sortable="false" filterable="false" text="user_id"/>
-        <cl:gridcell std:sid="gh-cell-8679dd95" rowindex="0" colindex="2" targetcolumnname="user_name" sortable="false" filterable="false" text="user_name"/>
-        <cl:gridcell std:sid="gh-cell-556e4464" rowindex="0" colindex="3" targetcolumnname="regi_date" sortable="false" filterable="false" text="regi_date"/>
+    <cl:grid std:sid="grid-87aed95b" id="grd1">
+      <cl:xylayoutdata std:sid="xyl-data-da3a6d68" top="174px" left="112px" width="618px" height="200px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:gridcolumn std:sid="g-column-ea23a2bf"/>
+      <cl:gridcolumn std:sid="g-column-a5172f17"/>
+      <cl:gridcolumn std:sid="g-column-8ee79d4c"/>
+      <cl:gridcolumn std:sid="g-column-40c3162d"/>
+      <cl:gridcolumn std:sid="g-column-5873ad56"/>
+      <cl:gridheader std:sid="gh-band-4f90f916">
+        <cl:gridrow std:sid="g-row-a82fb552"/>
+        <cl:gridcell std:sid="gh-cell-33cf3be8" rowindex="0" colindex="0"/>
+        <cl:gridcell std:sid="gh-cell-48a89d68" rowindex="0" colindex="1"/>
+        <cl:gridcell std:sid="gh-cell-b6955f1d" rowindex="0" colindex="2"/>
+        <cl:gridcell std:sid="gh-cell-d5211e6f" rowindex="0" colindex="3"/>
+        <cl:gridcell std:sid="gh-cell-cc93180e" rowindex="0" colindex="4"/>
       </cl:gridheader>
-      <cl:griddetail std:sid="gd-band-92de73a0">
-        <cl:gridrow std:sid="g-row-0ebe2eef"/>
-        <cl:gridcell std:sid="gd-cell-29ec505e" rowindex="0" colindex="0" columnname="number"/>
-        <cl:gridcell std:sid="gd-cell-ae2446d5" rowindex="0" colindex="1" columnname="user_id"/>
-        <cl:gridcell std:sid="gd-cell-7d3c493a" rowindex="0" colindex="2" columnname="user_name"/>
-        <cl:gridcell std:sid="gd-cell-a90d245b" rowindex="0" colindex="3" columnname="regi_date"/>
+      <cl:griddetail std:sid="gd-band-325eccf3">
+        <cl:gridrow std:sid="g-row-a0c1f6a6"/>
+        <cl:gridcell std:sid="gd-cell-6e0e1541" rowindex="0" colindex="0"/>
+        <cl:gridcell std:sid="gd-cell-fd675b19" rowindex="0" colindex="1"/>
+        <cl:gridcell std:sid="gd-cell-08d8c787" rowindex="0" colindex="2"/>
+        <cl:gridcell std:sid="gd-cell-0d076fa8" rowindex="0" colindex="3"/>
+        <cl:gridcell std:sid="gd-cell-3dbb0b87" rowindex="0" colindex="4"/>
       </cl:griddetail>
     </cl:grid>
     <cl:xylayout std:sid="xylayout-4ba1c3ec"/>
