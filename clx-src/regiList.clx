@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-8221e23c" version="1.0.4300">
+  <head std:sid="head-42ce08a6">
+    <screen std:sid="screen-50c9ba9b" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-d7ef995f" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-dbcad5ad" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-1836fd2c">
+      <cl:dataset std:sid="d-set-c26ea713" id="regiList">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-f54f0198" name="code"/>
+          <cl:datacolumn std:sid="d-column-c20c82b4" name="class_name"/>
+          <cl:datacolumn std:sid="d-column-4229d112" name="teacher"/>
+          <cl:datacolumn std:sid="d-column-1a0fadc3" name="s_date"/>
+          <cl:datacolumn std:sid="d-column-130d12ce" name="e_date"/>
+          <cl:datacolumn std:sid="d-column-7b8f524c" name="regi_date"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:datamap std:sid="d-map-8ba82b7b" id="selectcode">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-47064c69" name="code" datatype="number"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-68a8cc79" id="getRegiList" action="/getRegiList">
+        <cl:listener std:sid="listener-811b3020" name="submit-success" handler="onGetRegiListSubmitSuccess"/>
+        <cl:responsedata dataid="regiList"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-c6bff0a8" id="cancle" action="/cancle">
+        <cl:listener std:sid="listener-568360da" name="submit-success" handler="onCancleSubmitSuccess"/>
+        <cl:requestdata dataid="selectcode"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-5671c129">
+    <cl:listener std:sid="listener-f88c94ca" name="load" handler="onBodyLoad"/>
+    <cl:grid std:sid="grid-d629b968" id="grd1" datasetid="regiList">
+      <cl:xylayoutdata std:sid="xyl-data-d00eba0b" top="39px" left="34px" width="739px" height="289px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:gridcolumn std:sid="g-column-219e313e" width="80px"/>
+      <cl:gridcolumn std:sid="g-column-679e64e9" width="124px"/>
+      <cl:gridcolumn std:sid="g-column-8356fe34" width="87px"/>
+      <cl:gridcolumn std:sid="g-column-60142cdf"/>
+      <cl:gridcolumn std:sid="g-column-bbc0ed7f"/>
+      <cl:gridcolumn std:sid="g-column-ed19fd54"/>
+      <cl:gridcolumn std:sid="g-column-abfe57b0"/>
+      <cl:gridheader std:sid="gh-band-48163830">
+        <cl:gridrow std:sid="g-row-67a46e37"/>
+        <cl:gridcell std:sid="gh-cell-d5a630dd" rowindex="0" colindex="0" targetcolumnname="code" sortable="true" filterable="true" text="코드"/>
+        <cl:gridcell std:sid="gh-cell-6ee08b6f" rowindex="0" colindex="1" targetcolumnname="class_name" sortable="true" filterable="true" text="강의 명"/>
+        <cl:gridcell std:sid="gh-cell-c2123e5a" rowindex="0" colindex="2" targetcolumnname="teacher" sortable="true" filterable="true" text="강사명"/>
+        <cl:gridcell std:sid="gh-cell-55b0354b" rowindex="0" colindex="3" targetcolumnname="s_date" sortable="true" filterable="true" text="강의 시작일"/>
+        <cl:gridcell std:sid="gh-cell-aec801b9" rowindex="0" colindex="4" targetcolumnname="e_date" sortable="true" filterable="true" text="강의 종료일"/>
+        <cl:gridcell std:sid="gh-cell-6fadeb4e" rowindex="0" colindex="5" targetcolumnname="regi_date" sortable="true" filterable="true" text="강의 등록일"/>
+        <cl:gridcell std:sid="gh-cell-ae368a87" rowindex="0" colindex="6"/>
+      </cl:gridheader>
+      <cl:griddetail std:sid="gd-band-1a22ed97">
+        <cl:gridrow std:sid="g-row-6f4302c4"/>
+        <cl:gridcell std:sid="gd-cell-758857fe" rowindex="0" colindex="0" columnname="code"/>
+        <cl:gridcell std:sid="gd-cell-3be1ecce" rowindex="0" colindex="1" columnname="class_name"/>
+        <cl:gridcell std:sid="gd-cell-02e9a566" rowindex="0" colindex="2" columnname="teacher"/>
+        <cl:gridcell std:sid="gd-cell-b6053bbd" rowindex="0" colindex="3" columnname="s_date">
+          <cl:dateinput std:sid="d-input-4880cb60" id="dti1" readonly="true">
+            <cl:celldata std:sid="c-data-910142a2"/>
+          </cl:dateinput>
+        </cl:gridcell>
+        <cl:gridcell std:sid="gd-cell-4701e297" rowindex="0" colindex="4" columnname="e_date">
+          <cl:dateinput std:sid="d-input-371937f5" id="dti2" readonly="true">
+            <cl:celldata std:sid="c-data-d5ddb9e3"/>
+          </cl:dateinput>
+        </cl:gridcell>
+        <cl:gridcell std:sid="gd-cell-05ba9dfa" rowindex="0" colindex="5" columnname="regi_date">
+          <cl:dateinput std:sid="d-input-e2e5df41" id="dti3" readonly="true">
+            <cl:celldata std:sid="c-data-29e41491"/>
+          </cl:dateinput>
+        </cl:gridcell>
+        <cl:gridcell std:sid="gd-cell-0019a93b" rowindex="0" colindex="6">
+          <cl:button std:sid="button-fcd72edf" value="신청 취소">
+            <cl:listener std:sid="listener-dec219d0" name="click" handler="onButtonClick"/>
+            <cl:celldata std:sid="c-data-6e277083"/>
+          </cl:button>
+        </cl:gridcell>
+      </cl:griddetail>
+    </cl:grid>
+    <cl:xylayout std:sid="xylayout-844cee07"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

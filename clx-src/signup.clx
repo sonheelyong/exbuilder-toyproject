@@ -87,23 +87,6 @@
       <cl:listener std:sid="listener-f6bcdbf7" name="click" handler="onButtonClick3"/>
       <cl:xylayoutdata std:sid="xyl-data-21404d52" top="555px" left="712px" width="101px" height="30px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:button>
-    <cl:button std:sid="button-7d4d4aeb" value="ddd">
-      <cl:listener std:sid="listener-f4a2c4a2" name="click" handler="onButtonClick5"/>
-      <cl:xylayoutdata std:sid="xyl-data-9ea1cb1e" top="525px" left="313px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-    </cl:button>
-    <cl:button std:sid="button-24d4ae73" value="123">
-      <cl:listener std:sid="listener-1ca9df62" name="click" handler="onButtonClick4"/>
-      <cl:xylayoutdata std:sid="xyl-data-2a266e1c" top="584px" left="323px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-    </cl:button>
-    <cl:inputbox std:sid="i-box-30a9f49e" id="ipb5">
-      <cl:listener std:sid="listener-a6be7cec" name="value-change" handler="onIpb5ValueChange"/>
-      <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dm3" columnname="getid"/>
-      <cl:xylayoutdata std:sid="xyl-data-45e129c0" top="374px" left="313px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-    </cl:inputbox>
-    <cl:inputbox std:sid="i-box-20c9e971" id="ipb6">
-      <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dm2" columnname="idcheck"/>
-      <cl:xylayoutdata std:sid="xyl-data-cd31822b" top="288px" left="323px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-    </cl:inputbox>
     <cl:xylayout std:sid="xylayout-eef93a46"/>
   </body>
   <std:studiosetting>

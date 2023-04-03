@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.vo.ClassVo;
+import com.example.demo.vo.RegiVo;
 import com.example.demo.vo.ClassDTO;
 
 @Repository("classDao")
@@ -72,5 +73,25 @@ public class ClassDao {
 	public void deleteclass(int code) {
 		sqlSession.delete("class.deleteclass",code);
 		
+	}
+
+	public List<RegiVo> getcoderegi(int code) {
+		List<RegiVo> regi = sqlSession.selectList("class.getcoderegi", code);
+		return regi;
+	}
+
+	public ClassVo getcodeclass(int code) {
+		ClassVo classVo = sqlSession.selectOne("class.getcodeclass", code);
+		return classVo;
+	}
+
+	public void deleteregi_no(int regi_no) {
+		sqlSession.delete("class.deleteregi_no",regi_no);
+		
+	}
+
+	public List<ClassDTO> getRegiList(String user_id) {
+		List<ClassDTO> list = sqlSession.selectList("class.getRegiList", user_id);
+		return list;
 	}
 }

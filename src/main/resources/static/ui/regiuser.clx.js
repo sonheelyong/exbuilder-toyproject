@@ -19,16 +19,63 @@
 			 ************************************************/
 
 			/*
-			 * 루트 컨테이너에서 init 이벤트 발생 시 호출.
-			 * 앱이 최초 구성될 때 발생하는 이벤트 입니다.
+			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
+			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
 			 */
-				function onBodyInit(e){
+
+
+			function onBodyLoad(e){
 				var initValue = app.getHost().initValue;
 				var code = initValue.code
 
 				app.lookup("code").setValue("code", code);
-				app.lookup("getcoderegi").send()
+				app.lookup("getcodeclass").send()
+			}
 
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onGetcodeclassSubmitSuccess2(e){
+				var getcodeclass = e.control;
+				app.lookup("grd1").redraw()
+				app.lookup("out1").redraw()
+				app.lookup("out2").redraw()
+				app.lookup("out3").redraw()
+				app.lookup("out4").redraw()
+			}
+
+			/*
+			 * "수강 취소" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick(e){
+				var button = e.control;
+				
+				
+				var vcGrid = app.lookup("grd1");
+				var regi_no = vcGrid.getSelectedRow().getValue("regi_no")
+				var user_id = vcGrid.getSelectedRow().getValue("user_id")
+				
+				if(confirm(user_id+"님의 강의신청을 취소하시겠습니까?") == true){
+					app.lookup("regi_no").setValue("regi_no", regi_no);
+				    app.lookup("deleteregi_no").send()
+				}else{}
+					
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onDeleteregi_noSubmitSuccess(e){
+				var deleteregi_no = e.control;
+				alert("강의 신청 취소가 완료되었습니다")
+				var initValue = app.getHost().initValue;
+				var code = initValue.code
+
+				app.lookup("code").setValue("code", code);
+				app.lookup("getcodeclass").send()
 			};
 			// End - User Script
 			
@@ -36,7 +83,7 @@
 			var dataSet_1 = new cpr.data.DataSet("regi_user");
 			dataSet_1.parseData({
 				"columns" : [
-					{"name": "number"},
+					{"name": "regi_no"},
 					{"name": "user_id"},
 					{"name": "regi_date"}
 				]
@@ -61,11 +108,32 @@
 				}]
 			});
 			app.register(dataMap_2);
-			var submission_1 = new cpr.protocols.Submission("getcoderegi");
+			
+			var dataMap_3 = new cpr.data.DataMap("regi_no");
+			dataMap_3.parseData({
+				"columns" : [{
+					"name": "regi_no",
+					"dataType": "number"
+				}]
+			});
+			app.register(dataMap_3);
+			var submission_1 = new cpr.protocols.Submission("getcodeclass");
 			submission_1.action = "/getcodeclass";
 			submission_1.addRequestData(dataMap_2);
 			submission_1.addResponseData(dataMap_1, false);
+			submission_1.addResponseData(dataSet_1, false);
+			if(typeof onGetcodeclassSubmitSuccess2 == "function") {
+				submission_1.addEventListener("submit-success", onGetcodeclassSubmitSuccess2);
+			}
 			app.register(submission_1);
+			
+			var submission_2 = new cpr.protocols.Submission("deleteregi_no");
+			submission_2.action = "/deleteregi_no";
+			submission_2.addRequestData(dataMap_3);
+			if(typeof onDeleteregi_noSubmitSuccess == "function") {
+				submission_2.addEventListener("submit-success", onDeleteregi_noSubmitSuccess);
+			}
+			app.register(submission_2);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023px)", "tablet");
 			app.supportMedia("all and (max-width: 499px)", "mobile");
@@ -118,46 +186,10 @@
 				"height": "20px"
 			});
 			
-			var inputBox_1 = new cpr.controls.InputBox("ipb1");
-			inputBox_1.bind("value").toDataMap(app.lookup("regiclass"), "class_name");
-			container.addChild(inputBox_1, {
-				"top": "96px",
-				"left": "89px",
-				"width": "113px",
-				"height": "20px"
-			});
-			
-			var inputBox_2 = new cpr.controls.InputBox("ipb2");
-			inputBox_2.bind("value").toDataMap(app.lookup("regiclass"), "teacher");
-			container.addChild(inputBox_2, {
-				"top": "96px",
-				"left": "280px",
-				"width": "79px",
-				"height": "20px"
-			});
-			
-			var dateInput_1 = new cpr.controls.DateInput("dti1");
-			dateInput_1.bind("value").toDataMap(app.lookup("regiclass"), "s_date");
-			container.addChild(dateInput_1, {
-				"top": "96px",
-				"left": "462px",
-				"width": "110px",
-				"height": "20px"
-			});
-			
-			var dateInput_2 = new cpr.controls.DateInput("dti2");
-			dateInput_2.bind("value").toDataMap(app.lookup("regiclass"), "e_date");
-			container.addChild(dateInput_2, {
-				"top": "96px",
-				"left": "665px",
-				"width": "110px",
-				"height": "20px"
-			});
-			
 			var grid_1 = new cpr.controls.Grid("grd1");
 			grid_1.init({
+				"dataSet": app.lookup("regi_user"),
 				"columns": [
-					{"width": "100px"},
 					{"width": "100px"},
 					{"width": "100px"},
 					{"width": "100px"},
@@ -169,26 +201,34 @@
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 0},
 							"configurator": function(cell){
+								cell.filterable = true;
+								cell.sortable = true;
+								cell.targetColumnName = "regi_no";
+								cell.text = "수강신청 번호";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 1},
 							"configurator": function(cell){
+								cell.filterable = true;
+								cell.sortable = true;
+								cell.targetColumnName = "user_id";
+								cell.text = "유저 아이디";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 2},
 							"configurator": function(cell){
+								cell.filterable = true;
+								cell.sortable = true;
+								cell.targetColumnName = "regi_date";
+								cell.text = "수강 신청일";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 3},
 							"configurator": function(cell){
-							}
-						},
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 4},
-							"configurator": function(cell){
+								cell.text = "";
 							}
 						}
 					]
@@ -199,26 +239,33 @@
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 0},
 							"configurator": function(cell){
+								cell.columnName = "regi_no";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 1},
 							"configurator": function(cell){
+								cell.columnName = "user_id";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 2},
 							"configurator": function(cell){
+								cell.columnName = "regi_date";
 							}
 						},
 						{
 							"constraint": {"rowIndex": 0, "colIndex": 3},
 							"configurator": function(cell){
-							}
-						},
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 4},
-							"configurator": function(cell){
+								cell.control = (function(){
+									var button_1 = new cpr.controls.Button();
+									button_1.value = "수강 취소";
+									if(typeof onButtonClick == "function") {
+										button_1.addEventListener("click", onButtonClick);
+									}
+									return button_1;
+								})();
+								cell.controlConstraint = {};
 							}
 						}
 					]
@@ -230,8 +277,47 @@
 				"width": "618px",
 				"height": "200px"
 			});
+			
+			var output_5 = new cpr.controls.Output("out1");
+			output_5.bind("value").toDataMap(app.lookup("regiclass"), "class_name");
+			container.addChild(output_5, {
+				"top": "96px",
+				"left": "89px",
+				"width": "113px",
+				"height": "20px"
+			});
+			
+			var output_6 = new cpr.controls.Output("out2");
+			output_6.bind("value").toDataMap(app.lookup("regiclass"), "teacher");
+			container.addChild(output_6, {
+				"top": "96px",
+				"left": "280px",
+				"width": "79px",
+				"height": "20px"
+			});
+			
+			var output_7 = new cpr.controls.Output("out3");
+			output_7.bind("value").toDataMap(app.lookup("regiclass"), "s_date");
+			container.addChild(output_7, {
+				"top": "96px",
+				"left": "462px",
+				"width": "110px",
+				"height": "20px"
+			});
+			
+			var output_8 = new cpr.controls.Output("out4");
+			output_8.bind("value").toDataMap(app.lookup("regiclass"), "e_date");
+			container.addChild(output_8, {
+				"top": "96px",
+				"left": "665px",
+				"width": "110px",
+				"height": "20px"
+			});
 			if(typeof onBodyInit == "function"){
 				app.addEventListener("init", onBodyInit);
+			}
+			if(typeof onBodyLoad == "function"){
+				app.addEventListener("load", onBodyLoad);
 			}
 		}
 	});

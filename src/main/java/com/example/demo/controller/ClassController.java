@@ -18,7 +18,7 @@ import com.example.demo.service.ClassService;
 import com.example.demo.vo.ClassVo;
 import com.example.demo.vo.UserVo;
 import com.example.demo.vo.ClassDTO;
-import com.example.demo.vo.RegiDTO;
+import com.example.demo.vo.RegiVo;
 
 @Controller
 public class ClassController {
@@ -46,19 +46,33 @@ public class ClassController {
 	  String name = param.getValue("class_name");
 	  List<ClassDTO> vo = classService.searchList(name,user_id);
 	  dataRequest.setResponse("class", vo);
-	  System.out.println(vo.toString());
+	  
 	  return new JSONDataView();
   }
   
   // 코드로 강의 조회
-  @PostMapping("/getcoderegi")
+  @PostMapping("/getcodeclass")
   public View getcodeclass(DataRequest dataRequest) {
 	  
 	  ParameterGroup param = dataRequest.getParameterGroup("code");
 	  int code = Integer.parseInt(param.getValue("code"));
-	  
-	  List<RegiDTO> vo = classService.getcoderegi(code); 
 	 
+	  List<RegiVo> regi = classService.getcoderegi(code); 
+	  dataRequest.setResponse("regi_user", regi);
+	  
+	  ClassVo classVo = classService.getcodeclass(code); 
+	  String class_name = classVo.getClass_name();
+	  String teacher = classVo.getTeacher();
+	  String s_date = classVo.getS_date();
+	  String e_date = classVo.getE_date();
+	  
+	  Map<String, Object> map = new HashMap<>();
+	  map.put("class_name", class_name);
+	  map.put("teacher", teacher);
+	  map.put("s_date", s_date);
+	  map.put("e_date", e_date);
+	  dataRequest.setResponse("regiclass", map);
+	  
 	  return new JSONDataView();
   }
   
@@ -70,7 +84,7 @@ public class ClassController {
 	  String user_id = user.getUser_id();
 	  
 	  classService.regiClass(code,user_id);
-	
+	  
 	  return new JSONDataView();
   }
   
@@ -86,7 +100,6 @@ public class ClassController {
 		  map.put("check", check);
 		  dataRequest.setResponse("regicheck", map);
 		  
-		  System.out.println("체크"+check);
 	   return new JSONDataView();
    }
   
@@ -117,7 +130,7 @@ public class ClassController {
 	   return new JSONDataView();
    }
    
-   // 강의 추가
+   // 강의 추가 (관리자용)
    @PostMapping("/addclass")
    public View addclass( DataRequest dataRequest ) {
 	   ParameterGroup param = dataRequest.getParameterGroup("addclass");
@@ -134,7 +147,7 @@ public class ClassController {
    }
    
    
-   // 강의 수정
+   // 강의 수정 (관리자용)
    @PostMapping("/update")
    public View update( DataRequest dataRequest ) {
 	   
@@ -151,18 +164,36 @@ public class ClassController {
 	   return new JSONDataView();
    }
   
-  // 강의 삭제
+  // 강의 삭제 (관리자용)
    @PostMapping("/deleteclass")
    public View deleteclass( DataRequest dataRequest ) {
 	   ParameterGroup param = dataRequest.getParameterGroup("selectcode");
 	   int code = Integer.parseInt(param.getValue("code"));
-	   classService.deleteclass(code);
 	   
+	   classService.deleteclass(code);
 	   
 	   return new JSONDataView();
    }
   
-  
-  
-  
+  // regi_no로 수강취소 (관리자용)
+   @PostMapping("/deleteregi_no")
+   public View deleteregi_no(DataRequest dataRequest) {
+	   ParameterGroup param = dataRequest.getParameterGroup("regi_no");
+	   int regi_no = Integer.parseInt(param.getValue("regi_no"));
+	   classService.deleteregi_no(regi_no);
+	   
+	   return new JSONDataView();
+   }
+   
+  // 나의 수강신청 목록
+   @PostMapping("/getRegiList")
+   public View getRegiList(@SessionAttribute(name = "logInUser", required = false)UserVo user, DataRequest dataRequest) {
+	   String user_id = user.getUser_id();
+	   List<ClassDTO> list = classService.getRegiList(user_id);
+	   
+	   dataRequest.setResponse("regiList", list);
+	   System.out.println(list);
+	   
+	   return new JSONDataView();
+   }
 }

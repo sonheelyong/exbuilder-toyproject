@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.ClassDao;
 import com.example.demo.vo.ClassVo;
+import com.example.demo.vo.RegiVo;
 import com.example.demo.vo.ClassDTO;
 @Service
 public class ClassService {
@@ -57,5 +58,25 @@ public class ClassService {
 	public void deleteclass(int code) {
 		classDao.deleteclass(code);
 		
+	}
+
+	public List<RegiVo> getcoderegi(int code) {
+		List<RegiVo> regi = classDao.getcoderegi(code);
+		return regi;
+	}
+
+	public ClassVo getcodeclass(int code) {
+		ClassVo classVo = classDao.getcodeclass(code);
+		return classVo;
+	}
+
+	public void deleteregi_no(int regi_no) {
+		classDao.deleteregi_no(regi_no);
+		
+	}
+
+	public List<ClassDTO> getRegiList(String user_id) {
+		List<ClassDTO> list = classDao.getRegiList(user_id);
+		return list;
 	}
 }

@@ -179,6 +179,22 @@
 				var cancle = e.control;
 				alert("수강취소가 완료되었습니다.")
 				app.lookup("getclass").send();
+			}
+
+			/*
+			 * "나의 수강 신청 목록" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick6(e){
+				var button = e.control;
+				
+				app.openDialog("regiList", {width : 800, height : 400}, function(dialog){
+					dialog.ready(function(dialogApp){
+						dialog.headerTitle = "수강 신청 목록";
+					});
+				}).then(function(returnValue){
+					alert(JSON.stringify(returnValue));
+				});
 			};
 			// End - User Script
 			
@@ -554,6 +570,18 @@
 				"width": "1010px",
 				"height": "300px",
 				"left": "calc(50% - 505px)"
+			});
+			
+			var button_5 = new cpr.controls.Button();
+			button_5.value = "나의 수강 신청 목록";
+			if(typeof onButtonClick6 == "function") {
+				button_5.addEventListener("click", onButtonClick6);
+			}
+			container.addChild(button_5, {
+				"top": "546px",
+				"left": "257px",
+				"width": "142px",
+				"height": "39px"
 			});
 			if(typeof onBodyInit == "function"){
 				app.addEventListener("init", onBodyInit);

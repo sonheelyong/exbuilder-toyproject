@@ -68,14 +68,45 @@
    parameterType="com.example.demo.vo.ClassVo" >
    INSERT INTO CLASS_TB (CODE, TEACHER, CLASS_NAME, S_DATE, E_DATE)
    VALUES               (emp_seq.NEXTVAL, #{teacher}, #{class_name}, #{s_date}, #{e_date})
-   
    </insert>
    
    <delete id="deleteclass"
    parameterType="int">
    delete from class_tb
    where code = #{code}
-   
    </delete>
    
+    <select id="getcoderegi"
+    parameterType="int"
+    resultType="com.example.demo.vo.RegiVo">
+    
+   select regi_no, user_id, regi_date
+   from regi_tb
+   where code = #{code}
+   </select>
+   
+   <select id="getcodeclass"
+    parameterType="int"
+    resultType="com.example.demo.vo.ClassVo">
+    
+   select *
+   from class_tb
+   where code = #{code}
+   </select>
+   
+   <delete id="deleteregi_no"
+   parameterType="int">
+   
+   delete from regi_tb
+   where regi_no = #{regi_no}
+   </delete>
+   
+   <select id="getRegiList"
+   parameterType="String"
+   resultType="com.example.demo.vo.ClassDTO">
+   
+   select a.code, a.teacher, a.class_name, a.s_date, a.e_date, b.user_id, b.regi_date 
+   from class_tb a, regi_tb b
+   where b.code = a.code and b.user_id = #{user_id}
+   </select>
 </mapper>

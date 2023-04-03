@@ -287,51 +287,6 @@
 				"width": "101px",
 				"height": "30px"
 			});
-			
-			var button_3 = new cpr.controls.Button();
-			button_3.value = "ddd";
-			if(typeof onButtonClick5 == "function") {
-				button_3.addEventListener("click", onButtonClick5);
-			}
-			container.addChild(button_3, {
-				"top": "525px",
-				"left": "313px",
-				"width": "100px",
-				"height": "20px"
-			});
-			
-			var button_4 = new cpr.controls.Button();
-			button_4.value = "123";
-			if(typeof onButtonClick4 == "function") {
-				button_4.addEventListener("click", onButtonClick4);
-			}
-			container.addChild(button_4, {
-				"top": "584px",
-				"left": "323px",
-				"width": "100px",
-				"height": "20px"
-			});
-			
-			var inputBox_5 = new cpr.controls.InputBox("ipb5");
-			inputBox_5.bind("value").toDataMap(app.lookup("dm3"), "getid");
-			if(typeof onIpb5ValueChange == "function") {
-				inputBox_5.addEventListener("value-change", onIpb5ValueChange);
-			}
-			container.addChild(inputBox_5, {
-				"top": "374px",
-				"left": "313px",
-				"width": "100px",
-				"height": "20px"
-			});
-			
-			var inputBox_6 = new cpr.controls.InputBox("ipb6");
-			inputBox_6.bind("value").toDataMap(app.lookup("dm2"), "idcheck");
-			container.addChild(inputBox_6, {
-				"top": "288px",
-				"left": "323px",
-				"width": "100px",
-				"height": "20px"
-			});
 		}
 	});
 	app.title = "signup";

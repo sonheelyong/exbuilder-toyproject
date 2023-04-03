@@ -198,7 +198,7 @@ function onButtonClick(e){
     var vcGrid = app.lookup("grd2");
 	var code = vcGrid.getSelectedRow().getValue("code")
 	
-	app.openDialog("regiuser", {width : 800, height : 300}, function(dialog){
+	app.openDialog("regiuser", {width : 800, height : 500}, function(dialog){
 		dialog.ready(function(dialogApp){
 			dialog.headerTitle = "수강 신청 인원 보기";
 			dialog.initValue = {code: code};
